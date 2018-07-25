@@ -1,0 +1,37 @@
+{
+  "name": "tueble",
+  "version": "0.0.1",
+  "description": "A Vuejs table component",
+  "main": "dist/tueble.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf ./dist && webpack --config ./webpack.config.js --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcosdefontes/tueble.git"
+  },
+  "keywords": [
+    "vuejs",
+    "table"
+  ],
+  "author": "Marcos Freire",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcosdefontes/tueble/issues"
+  },
+  "homepage": "https://github.com/marcosdefontes/tueble#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "rimraf": "^2.6.2",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "vue": "^2.5.16",
+    "vue-html-loader": "^1.2.4",
+    "vue-loader": "^15.2.6",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.16.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.3"
+  }
+}
