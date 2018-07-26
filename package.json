@@ -5,7 +5,9 @@
   "main": "dist/tueble.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf ./dist && webpack --config ./webpack.config.js --mode production"
+    "start": "webpack-dev-server --config docs/webpack.config.js",
+    "demo": "NODE_ENV=production webpack --config docs/webpack.config.js",
+    "build": "rimraf ./dist && NODE_ENV=production webpack --config ./webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -24,14 +26,18 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
     "rimraf": "^2.6.2",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "vue": "^2.5.16",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.2.6",
     "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.16.2",
+    "webpack": "^2.6.1",
     "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^2.4.2",
     "webpack-merge": "^4.1.3"
   }
 }

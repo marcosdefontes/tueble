@@ -1,0 +1,22 @@
+<html>
+    <head>
+    </head>
+    
+    <body>
+
+        <div id="app">
+                <tu-table></tu-table>
+        </div>
+
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="../dist/tueble.min.js"></script>
+        <script>
+            
+            new Vue({
+                el: '#app',
+                components: {tuTable: TuebleComponent}
+            });
+        </script>
+    </body>
+</html>
