@@ -1,6 +1,7 @@
 <template>
-    <div>
+    <div class="tueble-component">
         <table :class="tableClass">
+          <caption v-if="showCaption"></caption>
         </table>
     </div>
 </template>
@@ -15,6 +16,16 @@ export default {
     data: {
       required: true,
       type: Array
+    },
+    /**
+     * Defines if caption will be displayed
+     * @type {Boolean}
+     * @default true
+     */
+    showCaption: {
+      required: false,
+      type: Boolean,
+      default: true
     },
     /**
      * Classes of table element.
