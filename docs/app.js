@@ -1,12 +1,12 @@
 import Vue from 'vue';
-import {
-    TuebleComponent
-} from '../src';
+import Tueble from '../src/components/Tueble';
+
+console.log(Tueble);
 
 new Vue({
     el: '#app',
 
     components: {
-        'tu-table': TuebleComponent,
+        'tu-table': Tueble,
     },
 });

@@ -1,9 +1,11 @@
-import TuebleComponent from './TuebleComponent.vue';
+import Tueble from './components/Tueble.vue';
 
 export default {
-  install(Vue, options = {}) {      
-    Vue.component('tu-table', TuebleComponent);
+  install(Vue, options = {}) {
+    Vue.component('tu-table', Tueble);
   },
 };
 
-export { TuebleComponent };
+export {
+  Tueble
+};
