@@ -1,11 +1,9 @@
 {
   "name": "tueble",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A Vuejs table component",
   "main": "dist/tueble.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --config docs/webpack.config.js",
     "docs": "NODE_ENV=production webpack --config docs/webpack.config.js",
     "build": "rimraf ./dist && NODE_ENV=production webpack --config ./webpack.config.js"
   },
