@@ -4,7 +4,7 @@ const merge = require('webpack-merge');
 module.exports = merge(require('../webpack.base'), {
     context: __dirname,
 
-    entry: './app.js',
+    entry: ['./app.js', './style.scss'],
 
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -21,5 +21,27 @@ module.exports = merge(require('../webpack.base'), {
     devServer: {
         contentBase: __dirname,
         port: 2000,
+    },
+    module: {
+        rules: [{
+            test: /\.scss$/,
+            use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].css',
+                        outputPath: 'assets/css/'
+                    }
+                },
+                {
+                    loader: 'extract-loader'
+                },
+                {
+                    loader: 'css-loader'
+                },
+                {
+                    loader: 'sass-loader'
+                }
+            ]
+        }]
     },
 });
