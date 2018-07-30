@@ -2,6 +2,11 @@
     <div class="tueble-component">
         <table :class="tableClass">
           <caption v-if="showCaption"></caption>
+          <thead>
+            <tr>
+              <th v-for="column in columns" :key="column.id">{{column.label}}</th>
+            </tr>
+          </thead>
           <tbody>
             <tr v-for="row in filteredAndSortedData" :key="row._id">
               <td v-for="column in columns" :key="column.id">

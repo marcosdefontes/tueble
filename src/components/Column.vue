@@ -26,6 +26,15 @@ export default {
       default: true
     },
     /**
+     * Sets the text of the column header
+     * @type {String}
+     * @required true
+     */
+    label: {
+      type: String,
+      required: true
+    },
+    /**
      * Classes that will be added to column
      * @type {String}
      */

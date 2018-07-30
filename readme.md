@@ -16,4 +16,5 @@
 | ----------- | --------- | ------------- | --------------------------------------- |
 | show        | Yes       | --            | Sets which object's property to display |
 | sortable    | No        | true          | Sets the column as sortable             |
+| label       | Yes       | --            | Sets the text of the column header      |
 | columnClass | No        | --            | Classes that will be added to column    |
