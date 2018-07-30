@@ -8,12 +8,12 @@
 
 | Prop | Required? | Default Value | Description                                |
 | ---- | --------- | ------------- | ------------------------------------------ |
-| data | Yes       |               | Data that will be used to render the table |
+| data | Yes       | --            | Data that will be used to render the table |
 
 ### Column Component
 
 | Prop        | Required? | Default Value | Description                             |
 | ----------- | --------- | ------------- | --------------------------------------- |
-| show        | Yes       |               | Sets which object's property to display |
+| show        | Yes       | --            | Sets which object's property to display |
 | sortable    | No        | true          | Sets the column as sortable             |
-| columnClass | No        |               | Classes that will be added to column    |
+| columnClass | No        | --            | Classes that will be added to column    |
