@@ -9,7 +9,7 @@ export default {
   name: "tu-column",
   props: {
     /**
-     * Sets which object's property to display.
+     * Sets which object's property to display
      * @type {String}
      */
     show: {
@@ -26,7 +26,7 @@ export default {
       default: true
     },
     /**
-     * Classes that will be added to column (tr)
+     * Classes that will be added to column
      * @type {String}
      */
     columnClass: {
