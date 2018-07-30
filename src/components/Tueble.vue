@@ -3,6 +3,9 @@
         <table :class="tableClass">
           <caption v-if="showCaption"></caption>
         </table>
+        <div style="display:none;">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -35,6 +38,12 @@ export default {
       required: false,
       type: String
     }
+  },
+  mounted() {
+    const vueColumns = this.$children.filter(
+      el => el.$options.name == "tu-column"
+    );
+    console.log(vueColumns);
   },
   data() {
     return {};
