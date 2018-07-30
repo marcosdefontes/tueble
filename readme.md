@@ -18,3 +18,4 @@
 | sortable    | No        | true          | Sets the column as sortable             |
 | label       | Yes       | --            | Sets the text of the column header      |
 | columnClass | No        | --            | Classes that will be added to column    |
+| index       | No        | false         | If true will display the row number     |

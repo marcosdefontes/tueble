@@ -14,7 +14,7 @@ export default {
      */
     show: {
       type: String,
-      required: true
+      required: false
     },
     /**
      * Sets the column as sortable
@@ -24,6 +24,17 @@ export default {
     sortable: {
       type: Boolean,
       default: true
+    },
+    /**
+     * If true will display the row number
+     * @type {Boolean}
+     * @default false
+     * @required: false
+     */
+    index: {
+      type: Boolean,
+      default: false,
+      required: false
     },
     /**
      * Sets the text of the column header

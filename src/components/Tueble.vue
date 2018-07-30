@@ -8,11 +8,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in filteredAndSortedData" :key="row._id">
+            <!-- <tr v-for="row in filteredAndSortedData" :key="row._id">
               <td v-for="column in columns" :key="column.id">
                 {{ row[column.show] }}
               </td>
-            </tr>
+            </tr> -->
+            <tu-row v-for="(row, index) in filteredAndSortedData" :key="row._id"
+              :columns="columns" :row-index="index" :row-data="row"></tu-row>
           </tbody>
         </table>
         <div style="display:none;">
@@ -23,7 +25,11 @@
 
 <script>
 import Column from "../classes/Column";
+import RowComponent from "./RowComponent.vue";
 export default {
+  components: {
+    "tu-row": RowComponent
+  },
   props: {
     /**
      * Data that will be used to render the table
