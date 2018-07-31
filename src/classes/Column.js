@@ -11,5 +11,8 @@ export default class Column {
         for (const property in properties) {
             this[property] = vueColumnComponent[property];
         }
+
+        this.isActive = false;
+        this.sortOrder = 1;
     }
 }
