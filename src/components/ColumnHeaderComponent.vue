@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     clickAction() {
-      this.$emit("sortUpdate", this.columnIndex);
+      if (!this.column.index) this.$emit("sortUpdate", this.columnIndex);
     }
   }
 };

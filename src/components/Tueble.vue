@@ -67,7 +67,8 @@ export default {
   },
   data: () => ({
     columns: [],
-    orderBy: null
+    orderBy: null,
+    orderAscDesc: 1
   }),
   mounted() {
     const vueColumns = this.$children.filter(
@@ -77,18 +78,21 @@ export default {
 
     if (this.defaultSortBy) {
       this.orderBy = this.defaultSortBy;
+      this.setDefaultColumn(this.defaultSortBy);
     }
   },
   computed: {
     filteredAndSortedData: function() {
       let data = this.data;
       let orderBy = this.orderBy;
-      let order = 1;
+      let order = this.orderAscDesc;
 
       if (orderBy) {
+        // console.log(orderBy);
         data = data.slice().sort(function(a, b) {
           a = a[orderBy];
           b = b[orderBy];
+          // console.log(`Comparando ${a} com ${b}`);
           return (a === b ? 0 : a > b ? 1 : -1) * order;
         });
       }
@@ -109,10 +113,19 @@ export default {
           if (this.columns[i].isActive)
             this.columns[i].sortOrder = this.columns[i].sortOrder * -1;
           this.columns[i].isActive = true;
+          this.orderBy = this.columns[i].show;
+          this.orderAscDesc = this.columns[i].sortOrder;
         } else {
           this.columns[i].isActive = false;
         }
       }
+    },
+    setDefaultColumn: function(columnName) {
+      this.columns.forEach(element => {
+        if (element.show == columnName) {
+          element.isActive = true;
+        }
+      });
     }
   }
 };
