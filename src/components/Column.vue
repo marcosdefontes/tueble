@@ -52,6 +52,14 @@ export default {
     columnClass: {
       type: String,
       default: ""
+    },
+    /**
+     * Classes that will be added to column header
+     * @type {String}
+     */
+    columnHeaderClass: {
+      type: String,
+      default: ""
     }
   }
 };

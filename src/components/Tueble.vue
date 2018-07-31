@@ -4,7 +4,10 @@
           <caption v-if="showCaption"></caption>
           <thead>
             <tr>
-              <th v-for="column in columns" :key="column.id">{{column.label}}</th>
+              <tu-column-header v-for="column in columns" :key="column.id" 
+                :column="column">
+              </tu-column-header>
+              <!-- <th v-for="column in columns" :key="column.id">{{column.label}}</th> -->
             </tr>
           </thead>
           <tbody>
@@ -26,9 +29,11 @@
 <script>
 import Column from "../classes/Column";
 import RowComponent from "./RowComponent.vue";
+import ColumnHeaderComponent from "./ColumnHeaderComponent.vue";
 export default {
   components: {
-    "tu-row": RowComponent
+    "tu-row": RowComponent,
+    "tu-column-header": ColumnHeaderComponent
   },
   props: {
     /**
@@ -56,20 +61,43 @@ export default {
     tableClass: {
       required: false,
       type: String
+    },
+    /**
+     * Order the table by a column
+     * @type {String}
+     */
+    defaultSortBy: {
+      required: false,
+      type: String
     }
   },
   data: () => ({
-    columns: []
+    columns: [],
+    orderBy: null
   }),
   mounted() {
     const vueColumns = this.$children.filter(
       el => el.$options.name == "tu-column"
     );
     this.columns = vueColumns.map(column => new Column(column));
+
+    if (this.defaultSortBy) {
+      this.orderBy = this.defaultSortBy;
+    }
   },
   computed: {
     filteredAndSortedData: function() {
       let data = this.data;
+      let orderBy = this.orderBy;
+      let order = 1;
+
+      if (orderBy) {
+        data = data.slice().sort(function(a, b) {
+          a = a[orderBy];
+          b = b[orderBy];
+          return (a === b ? 0 : a > b ? 1 : -1) * order;
+        });
+      }
 
       let rowId = 0;
       data = data.map(row => {

@@ -1,8 +1,8 @@
 <template>
     <tr>
         <template v-for="column in columns">
-            <td :key="column.id" v-if="column.index">{{ rowIndex+1 }}</td>
-            <td :key="column.id" v-else>{{ rowData[column.show] }}</td>
+            <td :key="column.id" :class="column.columnClass" v-if="column.index">{{ rowIndex+1 }}</td>
+            <td :key="column.id" :class="column.columnClass" v-else>{{ rowData[column.show] }}</td>
         </template>
     </tr>
 </template>
