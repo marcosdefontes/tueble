@@ -63,6 +63,17 @@ export default {
     defaultSortBy: {
       required: false,
       type: String
+    },
+    /**
+     * Order the table by a column
+     * @type {String}
+     */
+    defaultSortOrder: {
+      required: false,
+      default: "asc",
+      validator: function(value) {
+        return ["asc", "desc"].includes(value);
+      }
     }
   },
   data: () => ({
@@ -124,6 +135,13 @@ export default {
       this.columns.forEach(element => {
         if (element.show == columnName) {
           element.isActive = true;
+          if (this.defaultSortOrder == "asc") {
+            element.sortOrder = 1;
+          }
+          if (this.defaultSortOrder == "desc") {
+            element.sortOrder = -1;
+          }
+          this.orderAscDesc = element.sortOrder;
         }
       });
     }

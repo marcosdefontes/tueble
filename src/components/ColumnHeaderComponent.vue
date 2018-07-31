@@ -21,7 +21,8 @@ export default {
     classNames() {
       return (
         this.column.columnHeaderClass +
-        (this.column.isActive ? " header-active" : "")
+        (this.column.isActive ? " header-active" : "") +
+        (this.column.index ? " header-index" : "")
       );
     },
     sortIcon() {
