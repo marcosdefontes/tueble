@@ -4,18 +4,12 @@
           <caption v-if="showCaption"></caption>
           <thead>
             <tr>
-              <tu-column-header v-for="column in columns" :key="column.id" 
-                :column="column">
+              <tu-column-header v-for="(column, index) in columns" :key="column.id" 
+                :column="column" :column-index="index" @sortUpdate="updateSortColumn">
               </tu-column-header>
-              <!-- <th v-for="column in columns" :key="column.id">{{column.label}}</th> -->
             </tr>
           </thead>
           <tbody>
-            <!-- <tr v-for="row in filteredAndSortedData" :key="row._id">
-              <td v-for="column in columns" :key="column.id">
-                {{ row[column.show] }}
-              </td>
-            </tr> -->
             <tu-row v-for="(row, index) in filteredAndSortedData" :key="row._id"
               :columns="columns" :row-index="index" :row-data="row"></tu-row>
           </tbody>
@@ -106,6 +100,19 @@ export default {
       });
 
       return data;
+    }
+  },
+  methods: {
+    updateSortColumn: function(columnIndex) {
+      for (let i = 0; i < this.columns.length; i++) {
+        if (i == columnIndex) {
+          if (this.columns[i].isActive)
+            this.columns[i].sortOrder = this.columns[i].sortOrder * -1;
+          this.columns[i].isActive = true;
+        } else {
+          this.columns[i].isActive = false;
+        }
+      }
     }
   }
 };

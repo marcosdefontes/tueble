@@ -1,5 +1,5 @@
 <template>
-    <th :class="classNames">{{column.label}}
+    <th :class="classNames" @click="clickAction">{{column.label}}
         <span v-if="column.isActive" v-html="sortIcon"></span>
     </th>
 </template>
@@ -14,7 +14,8 @@ export default {
     column: {
       required: true,
       type: Object
-    }
+    },
+    columnIndex: { type: Number }
   },
   computed: {
     classNames() {
@@ -25,6 +26,11 @@ export default {
     },
     sortIcon() {
       return this.column.sortOrder == 1 ? "&#9660;" : "&#9650;";
+    }
+  },
+  methods: {
+    clickAction() {
+      this.$emit("sortUpdate", this.columnIndex);
     }
   }
 };
