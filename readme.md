@@ -2,11 +2,11 @@
 
 > Work in progress!
 
-## Props
+## Properties
 
 ### Tueble (Root Table Component)
 
-| Prop               | Required? | Default Value | Description                                                       |
+| Property           | Required? | Default Value | Description                                                       |
 | ------------------ | --------- | ------------- | ----------------------------------------------------------------- |
 | data               | Yes       | --            | Data that will be used to render the table                        |
 | default-sort-by    | No        | --            | Initial order of the table                                        |
@@ -15,7 +15,7 @@
 
 ### Column Component
 
-| Prop                | Required? | Default Value | Description                                                                          |
+| Property            | Required? | Default Value | Description                                                                          |
 | ------------------- | --------- | ------------- | ------------------------------------------------------------------------------------ |
 | show                | No        | --            | Sets which object's property to display. Must be provided if `index` prop is `false` |
 | sortable            | No        | `true`        | Sets the column as sortable                                                          |
