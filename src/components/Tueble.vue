@@ -9,7 +9,7 @@
               </tu-column-header>
             </tr>
           </thead>
-          <tbody>
+          <tbody :class="tableBodyClass">
             <tu-row v-for="(row, index) in filteredAndSortedData" :key="row._id"
               :columns="columns" :row-index="index" :row-data="row"></tu-row>
           </tbody>
@@ -53,6 +53,14 @@ export default {
      * @type {String}
      */
     tableClass: {
+      required: false,
+      type: String
+    },
+    /**
+     * Classes of tbody (table) element.
+     * @type {String}
+     */
+    tableBodyClass: {
       required: false,
       type: String
     },

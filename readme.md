@@ -12,6 +12,7 @@
 | default-sort-by    | No        | --            | Initial order of the table                                        |
 | default-sort-order | No        | asc           | Initial sort order. `asc` for ascending and `desc` for descending |
 | table-class        | No        | --            | Classes that will be added to the table                           |
+| table-body-class   | No        | --            | Classes that will be added to the table body (`tbody`)            |
 
 ### Column Component
 
