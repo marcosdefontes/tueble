@@ -1,13 +1,20 @@
 <template>
     <tr>
-        <template v-for="column in columns">
+        <!-- <template v-for="column in columns">
             <td :key="column.id" :class="column.columnClass" v-if="column.index">{{ rowIndex+1 }}</td>
             <td :key="column.id" :class="column.columnClass" v-else>{{ rowData[column.show] }}</td>
-        </template>
+        </template> -->
+        <tu-cell v-for="column in columns" :key="column.id" :column="column" 
+          :row-data="rowData" :row-index="rowIndex">
+        </tu-cell>
     </tr>
 </template>
 <script>
+import CellComponent from "./CellComponent.js";
 export default {
+  components: {
+    "tu-cell": CellComponent
+  },
   props: {
     /**
      * Table row number

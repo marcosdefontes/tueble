@@ -14,5 +14,6 @@ export default class Column {
 
         this.isActive = false;
         this.sortOrder = 1;
+        this.template = vueColumnComponent.$scopedSlots.default;
     }
 }

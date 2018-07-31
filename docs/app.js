@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Tueble from "../src/components/Tueble";
-import Column from "../src/components/Column";
+import Column from "../src/components/ColumnComponent";
 
 new Vue({
   el: "#app",

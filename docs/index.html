@@ -32,7 +32,11 @@
             { firstName: 'Ringo', birthday: '07/07/1940', songs: 2 },
             ]" table-class="table" default-sort-by="firstName">
                 <tu-column :index="true" label="#"></tu-column>
-                <tu-column label="First Name" show="firstName"></tu-column>
+                <tu-column label="First Name" show="firstName">
+                    <template slot-scope="row">
+                        <a :href="`#${row.firstName}`" v-html="`${row.firstName}`"></a>
+                    </template>
+                </tu-column>
                 <tu-column label="Birthday" show="birthday"></tu-column>
                 <tu-column label="Songs" show="songs" column-header-class="center" column-class="center"></tu-column>
             </tu-table>
