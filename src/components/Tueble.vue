@@ -25,6 +25,7 @@ import Column from "../classes/Column";
 import TextFilter from "../classes/TextFilter";
 import RowComponent from "./RowComponent.vue";
 import ColumnHeaderComponent from "./ColumnHeaderComponent.vue";
+import filterEngine from "../FilterEngine";
 export default {
   components: {
     "tu-row": RowComponent,
@@ -109,21 +110,7 @@ export default {
       let orderBy = this.orderBy;
       let order = this.orderAscDesc;
 
-      if (orderBy) {
-        data = data.slice().sort(function(a, b) {
-          a = a[orderBy];
-          b = b[orderBy];
-          return (a === b ? 0 : a > b ? 1 : -1) * order;
-        });
-      }
-
-      let rowId = 0;
-      data = data.map(row => {
-        row._id = rowId++;
-        return row;
-      });
-
-      return data;
+      return filterEngine.filterArray(data, orderBy, order);
     }
   },
   methods: {
