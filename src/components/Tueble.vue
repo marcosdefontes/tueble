@@ -22,6 +22,7 @@
 
 <script>
 import Column from "../classes/Column";
+import TextFilter from "../classes/TextFilter";
 import RowComponent from "./RowComponent.vue";
 import ColumnHeaderComponent from "./ColumnHeaderComponent.vue";
 export default {
@@ -86,14 +87,16 @@ export default {
   },
   data: () => ({
     columns: [],
+    textFilters: [],
     orderBy: null,
     orderAscDesc: 1
   }),
   mounted() {
-    const vueColumns = this.$children.filter(
-      el => el.$options.name == "tu-column"
+    this.columns = this.mapVueComponentsToObjects("tu-column", "Column");
+    this.textFilters = this.mapVueComponentsToObjects(
+      "filter-by-text",
+      "TextFilter"
     );
-    this.columns = vueColumns.map(column => new Column(column));
 
     if (this.defaultSortBy) {
       this.orderBy = this.defaultSortBy;
@@ -107,11 +110,9 @@ export default {
       let order = this.orderAscDesc;
 
       if (orderBy) {
-        // console.log(orderBy);
         data = data.slice().sort(function(a, b) {
           a = a[orderBy];
           b = b[orderBy];
-          // console.log(`Comparando ${a} com ${b}`);
           return (a === b ? 0 : a > b ? 1 : -1) * order;
         });
       }
@@ -152,6 +153,18 @@ export default {
           this.orderAscDesc = element.sortOrder;
         }
       });
+    },
+    mapVueComponentsToObjects: function(vueName, className) {
+      const classesMapping = {
+        Column: Column,
+        TextFilter: TextFilter
+      };
+      const vueComponents = this.$children.filter(
+        el => el.$options.name == vueName
+      );
+      return vueComponents.map(
+        component => new classesMapping[className](component)
+      );
     }
   }
 };
