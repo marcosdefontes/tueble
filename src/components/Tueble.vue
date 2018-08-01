@@ -110,7 +110,13 @@ export default {
       let orderBy = this.orderBy;
       let order = this.orderAscDesc;
 
-      return filterEngine.filterArray(data, orderBy, order);
+      return filterEngine.filterArray(
+        data,
+        orderBy,
+        order,
+        this.columns,
+        this.textFilters
+      );
     }
   },
   methods: {

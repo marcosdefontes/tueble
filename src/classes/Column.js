@@ -5,7 +5,7 @@ import { 
 export default class Column {
     constructor(vueColumnComponent) {
         const properties = pick(vueColumnComponent, [
-            'show', 'sortable', 'columnClass', 'label', 'index', 'columnHeaderClass'
+            'show', 'sortable', 'filterable', 'columnClass', 'label', 'index', 'columnHeaderClass'
         ]);
 
         for (const property in properties) {

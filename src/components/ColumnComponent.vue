@@ -26,6 +26,15 @@ export default {
       default: true
     },
     /**
+     * If true, the search text will be compared to the column contents
+     * @type {Boolean}
+     * @default true
+     */
+    filterable: {
+      type: Boolean,
+      default: true
+    },
+    /**
      * If true will display the row number
      * @type {Boolean}
      * @default false

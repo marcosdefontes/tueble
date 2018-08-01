@@ -5,7 +5,7 @@ import { 
 export default class TextFilter {
     constructor(component) {
         const properties = pick(component, [
-            'filterBy',
+            'filterBy', 'filterMinSize'
         ]);
 
         for (const property in properties) {

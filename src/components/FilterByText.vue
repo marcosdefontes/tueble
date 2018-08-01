@@ -10,6 +10,11 @@ export default {
       required: true,
       type: String,
       default: ""
+    },
+    filterMinSize: {
+      required: false,
+      type: Number,
+      default: 2
     }
   }
 };
