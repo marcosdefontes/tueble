@@ -1,16 +1,11 @@
-import { 
-    pick
-} from '../helper';
-
 export default class TextFilter {
-    constructor(component) {
-        const properties = pick(component, [
-            'filterBy', 'filterMinSize'
-        ]);
+    constructor(filterText, filterMinSize) {
+        this.filterText = filterText
+        this.filterMinSize = filterMinSize
+    }
 
-        for (const property in properties) {
-            this[property] = component[property];
-        }
-
+    isValid() {
+        return typeof this.filterText == 'string' &&
+            this.filterText.length >= this.filterMinSize
     }
 }

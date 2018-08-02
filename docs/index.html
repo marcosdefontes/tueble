@@ -27,7 +27,7 @@
             </h1>
             <div class="row">
                 <div class="col s5">
-                    <input type="text">
+                    <input type="text" id="search" v-model="searchKey" />
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
             { firstName: 'Paul', birthday: '18/06/1942', songs: 70 },
             { firstName: 'George', birthday: '25/02/1943', songs: 22 },
             { firstName: 'Ringo', birthday: '07/07/1940', songs: 2 },
-            ]" table-class="table" table-body-class="temp" default-sort-by="firstName">
+            ]" table-class="table" table-body-class="temp" default-sort-by="firstName" :filter-text="searchKey" :filter-min-size="2">
                 <tu-column :index="true" label="#"></tu-column>
                 <tu-column label="First Name" show="firstName" :filterable="true">
                     <template slot-scope="row">
@@ -46,7 +46,6 @@
                 <tu-column label="Birthday" show="birthday"></tu-column>
                 <tu-column label="Songs" show="songs" column-header-class="center" column-class="center"></tu-column>
 
-                <filter-by-text filter-by="au"></filter-by-text>
             </tu-table>
 
         </article>

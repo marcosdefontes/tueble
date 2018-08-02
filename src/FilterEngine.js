@@ -1,29 +1,25 @@
 class FilterEngine {
-    filterArray(array, sortBy, sortOrder, columns, textFilters = [], domainFilters = []) {
+    filterArray(array, sortBy, sortOrder, columns, textFilter, domainFilters = []) {
 
         const filterableColumns = this.pluck(
             columns.filter(column => column.filterable), 'show');
 
-        textFilters.filter(
-                filter =>
-                typeof filter.filterBy == 'string' &&
-                filter.filterBy.length >= filter.filterMinSize)
-            .forEach(filter => {
-
-                array = array.filter(function (row) {
-                    return Object.keys(row)
-                        .filter(function (column) {
-                            return filterableColumns.includes(column);
-                        })
-                        .some(function (key) {
-                            return (
-                                String(row[key])
-                                .toLowerCase()
-                                .indexOf(filter.filterBy) >= 0
-                            );
-                        });
-                });
+        if (textFilter.isValid()) {
+            array = array.filter(function (row) {
+                return Object.keys(row)
+                    .filter(function (column) {
+                        return filterableColumns.includes(column);
+                    })
+                    .some(function (key) {
+                        return (
+                            String(row[key])
+                            .toLowerCase()
+                            .indexOf(textFilter.filterText) >= 0
+                        );
+                    });
             });
+
+        }
 
 
         if (sortBy) {

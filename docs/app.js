@@ -7,6 +7,10 @@ import FilterByText from "../src/components/FilterByText";
 new Vue({
   el: "#app",
 
+  data: () => ({
+    searchKey: ''
+  }),
+
   components: {
     "tu-table": Tueble,
     "tu-column": Column,

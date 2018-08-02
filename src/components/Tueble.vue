@@ -66,6 +66,16 @@ export default {
       required: false,
       type: String
     },
+    filterText: {
+      required: true,
+      type: String,
+      default: ""
+    },
+    filterMinSize: {
+      required: false,
+      type: Number,
+      default: 2
+    },
     /**
      * Order the table by a column
      * @type {String}
@@ -94,10 +104,6 @@ export default {
   }),
   mounted() {
     this.columns = this.mapVueComponentsToObjects("tu-column", "Column");
-    this.textFilters = this.mapVueComponentsToObjects(
-      "filter-by-text",
-      "TextFilter"
-    );
 
     if (this.defaultSortBy) {
       this.orderBy = this.defaultSortBy;
@@ -109,13 +115,14 @@ export default {
       let data = this.data;
       let orderBy = this.orderBy;
       let order = this.orderAscDesc;
+      let textFilter = new TextFilter(this.filterText, this.filterMinSize);
 
       return filterEngine.filterArray(
         data,
         orderBy,
         order,
         this.columns,
-        this.textFilters
+        textFilter
       );
     }
   },
