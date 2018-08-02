@@ -46,6 +46,17 @@ export default {
       required: false
     },
     /**
+     * If true finds specified terms in your input text and adds HTML tag around them
+     * @type {Boolean}
+     * @default false
+     * @required: false
+     */
+    highlight: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    /**
      * Sets the text of the column header
      * @type {String}
      * @required true

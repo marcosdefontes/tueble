@@ -66,11 +66,22 @@ export default {
       required: false,
       type: String
     },
+    /**
+     * Term used to filter the table. Applies only to columns with the
+     * filterable property enabled.
+     * @type {String}
+     *
+     */
     filterText: {
-      required: true,
+      required: false,
       type: String,
       default: ""
     },
+    /**
+     * Minimal length of the filter search field to filter the table
+     * @type {Number}
+     *
+     */
     filterMinSize: {
       required: false,
       type: Number,
@@ -156,8 +167,7 @@ export default {
     },
     mapVueComponentsToObjects: function(vueName, className) {
       const classesMapping = {
-        Column: Column,
-        TextFilter: TextFilter
+        Column: Column
       };
       const vueComponents = this.$children.filter(
         el => el.$options.name == vueName
