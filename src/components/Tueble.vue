@@ -11,7 +11,7 @@
           </thead>
           <tbody :class="tableBodyClass">
             <tu-row v-for="(row, index) in filteredAndSortedData" :key="row._id"
-              :columns="columns" :row-index="index" :row-data="row"></tu-row>
+              :columns="columns" :row-index="index" :row-data="row" :filter-text="filterText"></tu-row>
           </tbody>
         </table>
         <div style="display:none;">

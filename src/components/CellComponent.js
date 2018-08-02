@@ -1,6 +1,6 @@
 export default {
     functional: true,
-    props: ['column', 'rowData', 'rowIndex'],
+    props: ['column', 'rowData', 'rowIndex', 'textSearch'],
 
     render(createElement, {
         props
@@ -18,9 +18,23 @@ export default {
         }
 
         data.domProps = {};
-        data.domProps.innerHTML =
-            props.column.index ?
-            props.rowIndex + 1 : props.rowData[props.column.show];
+        let highlight = function (text, query) {
+            if (!query) {
+                return text;
+            }
+            return text.toString()
+                .replace(new RegExp(query, "gi"), match => {
+                    return '<span class="highlight">' + match + '</span>';
+                });
+        }
+
+        let innerHTML =
+            props.column.index ? props.rowIndex + 1 :
+            (props.column.highlight ?
+                highlight(props.rowData[props.column.show], props.textSearch) :
+                props.rowData[props.column.show])
+
+        data.domProps.innerHTML = innerHTML
 
         return createElement('td', data);
     },
