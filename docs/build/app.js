@@ -1345,10 +1345,16 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     var Column = function Column(vueColumnComponent) {
         (0, _classCallCheck3.default)(this, Column);
 
-        var properties = (0, _helper.pick)(vueColumnComponent, ['show', 'sortable', 'filterable', 'columnClass', 'label', 'index', 'columnHeaderClass']);
+        var properties = (0, _helper.pick)(vueColumnComponent, ['show', 'sortable', 'filterable', 'columnClass', 'label', 'index', 'highlight', 'columnHeaderClass']);
 
         for (var property in properties) {
             this[property] = vueColumnComponent[property];
+        }
+
+        if (this.index) {
+            this.sortable = false;
+            this.filterable = false;
+            this.highlight = false;
         }
 
         this.isActive = false;
