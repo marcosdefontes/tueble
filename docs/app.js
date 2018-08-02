@@ -12,7 +12,8 @@ new Vue({
   },
 
   data: () => ({
-    searchKey: ''
+    searchKey: '',
+    names: []
   }),
 
   components: {

@@ -21,6 +21,10 @@
                 background-color: aquamarine;
             }
 
+            option.disabled {
+                color: grey
+            }
+
         </style>
     </head>
 
@@ -32,6 +36,14 @@
             <div class="row">
                 <div class="col s5">
                     <input type="text" id="search" v-model="searchKey" />
+                </div>
+                <div class="col s5">
+                    <select multiple name="names" id="names" class="browser-default" v-model="names">
+                        <option value="" selected class="disabled">Select one</option>
+                        <option value="George">George</option>
+                        <option value="John">John</option>
+                        <option value="Paul">Paul</option>
+                    </select>
                 </div>
             </div>
 
@@ -51,7 +63,7 @@
                 </tu-column>
                 <tu-column label="Birthday" show="birthday"></tu-column>
                 <tu-column label="Songs" show="songs" column-header-class="center" column-class="center" :highlight="true"></tu-column>
-
+                <filter-by-domain :filter-by="names" filter-column="firstName"></filter-by-domain>
             </tu-table>
 
         </article>

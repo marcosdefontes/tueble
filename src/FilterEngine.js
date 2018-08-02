@@ -21,6 +21,12 @@ class FilterEngine {
 
         }
 
+        domainFilters.filter(filter => filter.isValid()).forEach(filter => {
+            array = array.filter(row => {
+                return filter.filterBy.includes(row[filter.filterColumn])
+            })
+        })
+
 
         if (sortBy) {
             array = array.slice().sort(function (a, b) {

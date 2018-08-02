@@ -23,6 +23,7 @@
 <script>
 import Column from "../classes/Column";
 import TextFilter from "../classes/TextFilter";
+import DomainFilter from "../classes/DomainFilter";
 import RowComponent from "./RowComponent.vue";
 import ColumnHeaderComponent from "./ColumnHeaderComponent.vue";
 import filterEngine from "../FilterEngine";
@@ -109,17 +110,28 @@ export default {
   },
   data: () => ({
     columns: [],
-    textFilters: [],
+    domainFilters: [],
     orderBy: null,
     orderAscDesc: 1
   }),
   mounted() {
     this.columns = this.mapVueComponentsToObjects("tu-column", "Column");
+    this.domainFilters = this.mapVueComponentsToObjects(
+      "filter-by-domain",
+      "DomainFilter"
+    );
 
     if (this.defaultSortBy) {
       this.orderBy = this.defaultSortBy;
       this.setDefaultColumn(this.defaultSortBy);
     }
+
+    this.$on("filter-by-domain-changed", function(msg) {
+      this.domainFilters = this.mapVueComponentsToObjects(
+        "filter-by-domain",
+        "DomainFilter"
+      );
+    });
   },
   computed: {
     filteredAndSortedData: function() {
@@ -127,13 +139,15 @@ export default {
       let orderBy = this.orderBy;
       let order = this.orderAscDesc;
       let textFilter = new TextFilter(this.filterText, this.filterMinSize);
+      let domainFilters = this.domainFilters;
 
       return filterEngine.filterArray(
         data,
         orderBy,
         order,
         this.columns,
-        textFilter
+        textFilter,
+        domainFilters
       );
     }
   },
@@ -167,7 +181,8 @@ export default {
     },
     mapVueComponentsToObjects: function(vueName, className) {
       const classesMapping = {
-        Column: Column
+        Column: Column,
+        DomainFilter: DomainFilter
       };
       const vueComponents = this.$children.filter(
         el => el.$options.name == vueName
