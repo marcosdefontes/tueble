@@ -26,12 +26,32 @@ export default {
       default: true
     },
     /**
+     * If true, the search text will be compared to the column contents
+     * @type {Boolean}
+     * @default true
+     */
+    filterable: {
+      type: Boolean,
+      default: true
+    },
+    /**
      * If true will display the row number
      * @type {Boolean}
      * @default false
      * @required: false
      */
     index: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    /**
+     * If true finds specified terms in your input text and adds HTML tag around them
+     * @type {Boolean}
+     * @default false
+     * @required: false
+     */
+    highlight: {
       type: Boolean,
       default: false,
       required: false

@@ -5,7 +5,7 @@
             <td :key="column.id" :class="column.columnClass" v-else>{{ rowData[column.show] }}</td>
         </template> -->
         <tu-cell v-for="column in columns" :key="column.id" :column="column" 
-          :row-data="rowData" :row-index="rowIndex">
+          :row-data="rowData" :row-index="rowIndex" :text-search="filterText">
         </tu-cell>
     </tr>
 </template>
@@ -42,6 +42,17 @@ export default {
     rowData: {
       required: true,
       type: Object
+    },
+    /**
+     * Term used to filter the table. Applies only to columns with the
+     * filterable property enabled.
+     * @type {String}
+     *
+     */
+    filterText: {
+      required: false,
+      type: String,
+      default: ""
     }
   },
   computed: {

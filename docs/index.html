@@ -17,6 +17,14 @@
                 cursor: default;
             }
 
+            span.highlight {
+                background-color: aquamarine;
+            }
+
+            option.disabled {
+                color: grey
+            }
+
         </style>
     </head>
 
@@ -25,20 +33,37 @@
             <h1 class="page-title">
                 <a href="https://github.com/marcosdefontes/tueble">Tueble Component</a>
             </h1>
+            <div class="row">
+                <div class="col s5">
+                    <input type="text" id="search" v-model="searchKey" />
+                </div>
+                <div class="col s5">
+                    <select multiple name="names" id="names" class="browser-default" v-model="names">
+                        <option value="" selected class="disabled">Select one</option>
+                        <option value="George">George</option>
+                        <option value="John">John</option>
+                        <option value="Paul">Paul</option>
+                    </select>
+                </div>
+            </div>
+
             <tu-table :data="[
             { firstName: 'John', birthday: '04/10/1940', songs: 72 },
             { firstName: 'Paul', birthday: '18/06/1942', songs: 70 },
             { firstName: 'George', birthday: '25/02/1943', songs: 22 },
             { firstName: 'Ringo', birthday: '07/07/1940', songs: 2 },
-            ]" table-class="table" table-body-class="temp" default-sort-by="firstName">
+            ]" table-class="table" table-body-class="temp" default-sort-by="firstName" :filter-text="searchKey" :filter-min-size="2">
                 <tu-column :index="true" label="#"></tu-column>
-                <tu-column label="First Name" show="firstName">
+                <tu-column label="First Name" show="firstName" :filterable="true">
                     <template slot-scope="row">
-                        <a :href="`#${row.firstName}`" v-html="`${row.firstName}`"></a>
+                        <a :href="`#${row.firstName}`" v-html="$options.filters.highlight(row.firstName,searchKey)"></a>
                     </template>
                 </tu-column>
+                <tu-column label="First Name" show="firstName" :filterable="true" :highlight="true">
+                </tu-column>
                 <tu-column label="Birthday" show="birthday"></tu-column>
-                <tu-column label="Songs" show="songs" column-header-class="center" column-class="center"></tu-column>
+                <tu-column label="Songs" show="songs" column-header-class="center" column-class="center" :highlight="true"></tu-column>
+                <filter-by-domain :filter-by="names" filter-column="firstName"></filter-by-domain>
             </tu-table>
 
         </article>
