@@ -2,6 +2,9 @@
     <div class="tueble-component">
         <table :class="tableClass">
           <caption v-if="showCaption"></caption>
+          <p class="no-results" v-if="filteredAndSortedData.length == 0">
+            {{noDataText}}
+          </p>
           <thead>
             <tr>
               <tu-column-header v-for="(column, index) in columns" :key="column.id" 
@@ -106,6 +109,15 @@ export default {
       validator: function(value) {
         return ["asc", "desc"].includes(value);
       }
+    },
+    /**
+     * Order the table by a column
+     * @type {String}
+     */
+    noDataText: {
+      required: false,
+      type: String,
+      default: "No results found."
     }
   },
   data: () => ({
