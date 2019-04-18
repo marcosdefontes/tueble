@@ -1,4 +1,4 @@
-module.exports = function (words, query) {
+function highlightText (words, query) {
     if (!query) {
         return words;
     }
@@ -8,3 +8,5 @@ module.exports = function (words, query) {
             return '<span class="highlight">' + match + '</span>';
         });
 };
+
+export default highlightText;

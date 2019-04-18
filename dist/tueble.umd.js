@@ -1,5 +1,8 @@
-var Tueble = (function (exports) {
-    'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (global = global || self, factory(global.Tueble = {}));
+}(this, function (exports) { 'use strict';
 
     function pick(obj, keys) {
         return Object.assign.apply(Object, [ {} ].concat( keys.map(function (k) {
@@ -843,6 +846,6 @@ var Tueble = (function (exports) {
     exports.Tueble = Tueble;
     exports.default = plugin;
 
-    return exports;
+    Object.defineProperty(exports, '__esModule', { value: true });
 
-}({}));
+}));
