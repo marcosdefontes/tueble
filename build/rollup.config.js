@@ -102,7 +102,10 @@ function genConfig(opts) {
    //If minify use terser to minify the code
    if (opts.minify === true) {
       config.plugins.push(terser({
-         toplevel: true
+         toplevel: true,
+         output: {
+            comments: 'some'
+         }
       }))
    }
 
