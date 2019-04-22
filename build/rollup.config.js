@@ -4,6 +4,7 @@ import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 import vue from 'rollup-plugin-vue';
+import { terser } from "rollup-plugin-terser";
 
 const extensions = [
    '.js', '.jsx', '.ts', '.tsx',
@@ -15,11 +16,42 @@ const basename = 'tueble';
 /**
  * Configs' array
  */
-export default [{
-   extension: 'js',
-   format: 'umd',
-   env: 'development',
-}].map(genConfig);
+export default [
+   {
+      extension: 'js',
+      format: 'umd',
+      env: 'development',
+   },
+   {
+      extension: 'min.js',
+      format: 'umd',
+      env: 'production',
+      minify: true,
+   },
+   {
+      extension: 'common.js',
+      format: 'cjs',
+      env: 'production',
+   },
+   {
+      extension: 'esm.js',
+      format: 'es',
+      env: 'production',
+   },
+   {
+      extension: 'esm.browser.js',
+      format: 'es',
+      env: 'development',
+      transpile: false
+   },
+   {
+      extension: 'esm.browser.min.js',
+      format: 'es',
+      env: 'production',
+      transpile: false,
+      minify: true,
+   }
+].map(genConfig);
 
 
 /**
@@ -49,15 +81,22 @@ function genConfig(opts) {
       },
    }
 
+   // Adds env property to the beginning of config
    if (opts.env) {
-      // Adds env property to the beginning of config
       config.plugins.unshift(replace({
          'process.env.NODE_ENV': JSON.stringify(opts.env)
       }))
    }
 
+   //If minify use terser to minify the code
+   if (opts.minify === true) {
+      config.plugins.push(terser({
+         toplevel: true
+      }))
+   }
+
+   // If the file needs to be transpiled, appy the babel plugin
    if (opts.transpile !== false) {
-      // If the file needs to be transpiled, appy the babel plugin
       babel({ extensions, include: ['src/**//*'] })
    }
 
