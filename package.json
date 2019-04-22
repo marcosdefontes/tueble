@@ -2,12 +2,13 @@
    "name": "tueble",
    "version": "1.4.0",
    "description": "A Vuejs table component",
-   "main": "dist/tueble.umd.js",
+   "main": "dist/tueble.js",
    "module": "dist/tueble.esm.js",
    "unpkg": "dist/tueble.min.js",
    "scripts": {
       "prebuild": "rimraf ./dist",
-      "build": "rollup --config build/rollup.config.js"
+      "build": "rollup --config build/rollup.config.js",
+      "release": "np"
    },
    "repository": {
       "type": "git",
@@ -15,6 +16,7 @@
    },
    "keywords": [
       "vuejs",
+      "vue",
       "table"
    ],
    "author": "Marcos Freire",
@@ -29,6 +31,7 @@
       "@babel/plugin-transform-object-assign": "^7.2.0",
       "@babel/preset-env": "^7.4.3",
       "babel-preset-es2015-rollup": "^3.0.0",
+      "np": "^5.0.0",
       "rimraf": "^2.6.3",
       "rollup": "^1.10.1",
       "rollup-plugin-babel": "^4.3.2",
