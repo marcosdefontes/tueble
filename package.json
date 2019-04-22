@@ -1,6 +1,6 @@
 {
    "name": "tueble",
-   "version": "1.4.0",
+   "version": "1.4.1",
    "description": "A Vuejs table component",
    "main": "dist/tueble.js",
    "module": "dist/tueble.esm.js",
