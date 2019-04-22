@@ -1,55 +1,55 @@
 class FilterEngine {
-    filterArray(array, sortBy, sortOrder, columns, textFilter, domainFilters = []) {
+   filterArray(array, sortBy, sortOrder, columns, textFilter, domainFilters = []) {
 
-        const filterableColumns = this.pluck(
-            columns.filter(column => column.filterable), 'show');
+      const filterableColumns = this.pluck(
+         columns.filter(column => column.filterable), 'show');
 
-        if (textFilter.isValid()) {
-            array = array.filter(function (row) {
-                return Object.keys(row)
-                    .filter(function (column) {
-                        return filterableColumns.includes(column);
-                    })
-                    .some(function (key) {
-                        return (
-                            String(row[key])
-                            .toLowerCase()
-                            .indexOf(textFilter.filterText) >= 0
-                        );
-                    });
-            });
+      if (textFilter.isValid()) {
+         array = array.filter(function (row) {
+            return Object.keys(row)
+               .filter(function (column) {
+                  return filterableColumns.includes(column);
+               })
+               .some(function (key) {
+                  return (
+                     String(row[key])
+                        .toLowerCase()
+                        .indexOf(textFilter.filterText) >= 0
+                  );
+               });
+         });
 
-        }
+      }
 
-        domainFilters.filter(filter => filter.isValid()).forEach(filter => {
-            array = array.filter(row => {
-                return filter.filterBy.includes(row[filter.filterColumn])
-            })
-        })
+      domainFilters.filter(filter => filter.isValid()).forEach(filter => {
+         array = array.filter(row => {
+            return filter.filterBy.includes(row[filter.filterColumn])
+         })
+      })
 
 
-        if (sortBy) {
-            array = array.slice().sort(function (a, b) {
-                a = a[sortBy];
-                b = b[sortBy];
-                return (a === b ? 0 : a > b ? 1 : -1) * sortOrder;
-            });
-        }
+      if (sortBy) {
+         array = array.slice().sort(function (a, b) {
+            a = a[sortBy];
+            b = b[sortBy];
+            return (a === b ? 0 : a > b ? 1 : -1) * sortOrder;
+         });
+      }
 
-        let rowId = 0;
-        array = array.map(row => {
-            row._id = rowId++;
-            return row;
-        });
+      let rowId = 0;
+      array = array.map(row => {
+         row._id = rowId++;
+         return row;
+      });
 
-        return array;
-    }
+      return array;
+   }
 
-    pluck(array, key) {
-        return array.reduce(function (p, v) {
-            return p.concat(v[key]);
-        }, []);
-    }
+   pluck(array, key) {
+      return array.reduce(function (p, v) {
+         return p.concat(v[key]);
+      }, []);
+   }
 
 }
 

@@ -1,12 +1,12 @@
 <template>
-    <div v-if="false">
-        <slot></slot>
-    </div>
+  <div v-if="false">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "tu-column",
+  name: 'tu-column',
   props: {
     /**
      * Sets which object's property to display
@@ -71,7 +71,7 @@ export default {
      */
     columnClass: {
       type: String,
-      default: ""
+      default: ''
     },
     /**
      * Classes that will be added to column header
@@ -79,7 +79,7 @@ export default {
      */
     columnHeaderClass: {
       type: String,
-      default: ""
+      default: ''
     }
   }
 };

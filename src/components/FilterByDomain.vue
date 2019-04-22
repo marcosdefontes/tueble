@@ -1,10 +1,10 @@
 <template>
-    <div v-if="false"></div>
+  <div v-if="false"></div>
 </template>
 
 <script>
 export default {
-  name: "filter-by-domain",
+  name: 'filter-by-domain',
   props: {
     /**
      * Set of elements to be checked in the column provided
@@ -14,7 +14,7 @@ export default {
     filterBy: {
       required: true,
       type: Array,
-      default: ""
+      default: ''
     },
     /**
      * Name of the column to be searched for
@@ -28,7 +28,7 @@ export default {
   },
   watch: {
     filterBy() {
-      this.$parent.$emit("filter-by-domain-changed", this.filterBy);
+      this.$parent.$emit('filter-by-domain-changed', this.filterBy);
     }
   }
 };

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Tueble</title>
+   <style>
+      body {
+         background: #ebedee;
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+         font-size: 14px;
+         line-height: 1.5;
+         color: #24292e;
+      }
+
+      th {
+         cursor: pointer;
+      }
+
+      th.header-active {
+         color: blueviolet;
+      }
+
+      th.header-index {
+         cursor: default;
+      }
+
+      span.highlight {
+         background-color: aquamarine;
+      }
+
+      option.disabled {
+         color: grey
+      }
+   </style>
+</head>
+
+<body>
+
+   <article id="app" class="page">
+      <h1 class="page-title">
+         <a href="https://github.com/marcosdefontes/tueble">Tueble Component</a>
+      </h1>
+      <div class="row">
+         <div class="col s5">
+            <input type="text" id="search" v-model="searchKey" />
+         </div>
+         <div class="col s5">
+            <select multiple name="names" id="names" class="browser-default" v-model="names">
+               <option value="" selected class="disabled">Select one</option>
+               <option value="George">George</option>
+               <option value="John">John</option>
+               <option value="Paul">Paul</option>
+            </select>
+         </div>
+      </div>
+
+      <Tueble :data="[
+                { firstName: 'John', birthday: '04/10/1940', songs: 72 },
+                { firstName: 'Paul', birthday: '18/06/1942', songs: 70 },
+                { firstName: 'George', birthday: '25/02/1943', songs: 22 },
+                { firstName: 'Ringo', birthday: '07/07/1940', songs: 2 },
+                ]" table-class="table" table-body-class="temp" default-sort-by="firstName" :filter-text="searchKey"
+         :filter-min-size="2">
+         <Column :index="true" label="#"></Column>
+         <Column label="First Name" show="firstName" :filterable="true">
+            <template slot-scope="row">
+               <a :href="`#${row.firstName}`" v-html="$options.filters.highlight(row.firstName,searchKey)"></a>
+            </template>
+         </Column>
+         <Column label="First Name" show="firstName" :filterable="true" :highlight="true">
+         </Column>
+         <Column label="Birthday" show="birthday"></Column>
+         <Column label="Songs" show="songs" column-header-class="center" column-class="center" :highlight="true">
+         </Column>
+         <filter-by-domain :filter-by="names" filter-column="firstName"></filter-by-domain>
+      </Tueble>
+
+   </article>
+
+   <script src="https://unpkg.com/vue"></script>
+   <script src="../dist/tueble.min.js"></script>
+   <script type="text/javascript">
+      new Vue({
+         el: "#app",
+         data: () => ({
+            searchKey: '',
+            names: []
+         }),
+
+      });
+   </script>
+</body>
+
+</html>

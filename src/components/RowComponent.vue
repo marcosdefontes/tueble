@@ -1,19 +1,24 @@
 <template>
-    <tr>
-        <!-- <template v-for="column in columns">
+  <tr>
+    <!-- <template v-for="column in columns">
             <td :key="column.id" :class="column.columnClass" v-if="column.index">{{ rowIndex+1 }}</td>
             <td :key="column.id" :class="column.columnClass" v-else>{{ rowData[column.show] }}</td>
-        </template> -->
-        <tu-cell v-for="column in columns" :key="column.id" :column="column" 
-          :row-data="rowData" :row-index="rowIndex" :text-search="filterText">
-        </tu-cell>
-    </tr>
+    </template>-->
+    <tu-cell
+      v-for="column in columns"
+      :key="column.id"
+      :column="column"
+      :row-data="rowData"
+      :row-index="rowIndex"
+      :text-search="filterText"
+    ></tu-cell>
+  </tr>
 </template>
 <script>
-import CellComponent from "./CellComponent.js";
+import CellComponent from './CellComponent.js';
 export default {
   components: {
-    "tu-cell": CellComponent
+    'tu-cell': CellComponent
   },
   props: {
     /**
@@ -52,7 +57,7 @@ export default {
     filterText: {
       required: false,
       type: String,
-      default: ""
+      default: ''
     }
   },
   computed: {
