@@ -8,7 +8,8 @@
    "scripts": {
       "prebuild": "rimraf ./dist",
       "build": "rollup --config build/rollup.config.js",
-      "release": "npm run build && np"
+      "prepublish": "npm run build",
+      "release": "np"
    },
    "repository": {
       "type": "git",
