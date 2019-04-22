@@ -1,13 +1,18 @@
 
-import vue from 'rollup-plugin-vue';
-import buble from 'rollup-plugin-buble';
-import replace from 'rollup-plugin-replace';
-import minimist from 'minimist';
+import babel  from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
+import minimist from 'minimist';
+import replace from 'rollup-plugin-replace';
+import vue from 'rollup-plugin-vue';
+
+const extensions = [
+  '.js', '.jsx', '.ts', '.tsx',
+];
 
 const argv = minimist(process.argv.slice(2));
 
 const config = {
+  // Entry file
   input: 'src/entry.js',
   output: {
     name: 'Tueble',
@@ -25,7 +30,9 @@ const config = {
         isProduction: true,
       },
     }),
-    buble(),
+
+    // Compile TypeScript/JavaScript files
+    babel({ extensions, include: ['src/**/*'] }),
   ],
 };
 
