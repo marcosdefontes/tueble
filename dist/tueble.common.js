@@ -1,3 +1,8 @@
+/*!
+* tueble v1.3.1
+* (c) 2019 Marcos Freire
+* @license MIT
+*/
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

@@ -1,3 +1,8 @@
+/*!
+* tueble v1.3.1
+* (c) 2019 Marcos Freire
+* @license MIT
+*/
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");

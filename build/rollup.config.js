@@ -7,12 +7,10 @@ import replace from 'rollup-plugin-replace';
 import { terser } from "rollup-plugin-terser";
 import vue from 'rollup-plugin-vue';
 
-const extensions = [
-   '.js', '.jsx', '.ts', '.tsx',
-];
-
-const resolve = _path => path.resolve(__dirname, '../', _path)
 const basename = 'tueble';
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
+const resolve = _path => path.resolve(__dirname, '../', _path)
+const version = process.env.VERSION || require('../package.json').version
 
 /**
  * Configs' array
@@ -84,7 +82,8 @@ function genConfig(opts) {
          file: resolve('dist/' + basename + '.' + opts.extension),
          format: opts.format,
          name: 'Tueble',
-         exports: 'named'
+         exports: 'named',
+         banner: `/*!\n* tueble v${version}\n* (c) ${new Date().getFullYear()} Marcos Freire\n* @license MIT\n*/`
       },
    }
 

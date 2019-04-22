@@ -1,3 +1,8 @@
+/*!
+* tueble v1.3.1
+* (c) 2019 Marcos Freire
+* @license MIT
+*/
 function pick(obj, keys) {
    return Object.assign({}, ...keys.map(k => k in obj ? {
       [k]: obj[k]
