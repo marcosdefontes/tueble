@@ -13,7 +13,7 @@ const resolve = _path => path.resolve(__dirname, '../', _path)
 const basename = 'tueble';
 
 export default [{
-  file: resolve('dist/tueble.js'),
+  extension: 'js',
   format: 'umd',
   env: 'development',
   name: 'Tueble',
@@ -24,6 +24,7 @@ export default [{
 function genConfig(opts) {
   const config = {
     input: resolve('src/entry.js'),
+
     plugins: [
 
       commonjs(),
@@ -38,8 +39,8 @@ function genConfig(opts) {
         },
       }),
     ],
-    output:{
-      file: opts.file,
+    output: {
+      file: resolve('dist/' + basename + '.' + opts.extension),
       format: 'umd',
       name: 'Tueble',
       exports: 'named'

@@ -3,8 +3,8 @@ import Column from './ColumnComponent.vue';
 import FilterByDomain from './FilterByDomain.vue';
 
 export {
-    Tueble,
-    Column,
-    FilterByDomain
-	
+   Tueble,
+   Column,
+   FilterByDomain
+
 };
