@@ -1,4 +1,5 @@
 # Tueble - A Vuejs table component
+[![npm version](https://badge.fury.io/js/tueble.svg)](https://badge.fury.io/js/tueble)
 
 > Work in progress!
 
