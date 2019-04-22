@@ -65,14 +65,16 @@ function genConfig(opts) {
       input: resolve('src/entry.js'),
 
       plugins: [
+         // Convert CommonJS modules to ES6, so they can be included in a Rollup bundle
          commonjs(),
          vue({
+            // Inject CSS in JavaScript
             css: true,
-            compileTemplate: true,
             template: {
                isProduction: true,
             },
          }),
+         // Show file sizes
          filesize({
             showGzippedSize: true,
             showMinifiedSize: false
