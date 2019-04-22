@@ -1,10 +1,11 @@
 
-import path from 'path';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
+import filesize from 'rollup-plugin-filesize';
+import path from 'path';
 import replace from 'rollup-plugin-replace';
-import vue from 'rollup-plugin-vue';
 import { terser } from "rollup-plugin-terser";
+import vue from 'rollup-plugin-vue';
 
 const extensions = [
    '.js', '.jsx', '.ts', '.tsx',
@@ -24,7 +25,7 @@ export default [
    },
    {
       extension: 'min.js',
-      format: 'umd',
+      format: 'iife',
       env: 'production',
       minify: true,
    },
@@ -72,6 +73,10 @@ function genConfig(opts) {
                isProduction: true,
             },
          }),
+         filesize({
+            showGzippedSize: true,
+            showMinifiedSize: false
+         })
       ],
       output: {
          file: resolve('dist/' + basename + '.' + opts.extension),
@@ -88,6 +93,11 @@ function genConfig(opts) {
       }))
    }
 
+   // If the file needs to be transpiled, appy the babel plugin
+   if (opts.transpile !== false) {
+      config.plugins.push(babel({ extensions, include: ['src/**/*'] }))
+   }
+
    //If minify use terser to minify the code
    if (opts.minify === true) {
       config.plugins.push(terser({
@@ -95,10 +105,6 @@ function genConfig(opts) {
       }))
    }
 
-   // If the file needs to be transpiled, appy the babel plugin
-   if (opts.transpile !== false) {
-      babel({ extensions, include: ['src/**//*'] })
-   }
 
    return config
 }

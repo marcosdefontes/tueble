@@ -1,101 +1,160 @@
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
 function pick(obj, keys) {
-   return Object.assign({}, ...keys.map(k => k in obj ? {
-      [k]: obj[k]
-   } : {}))
+  return Object.assign.apply(Object, [{}].concat(_toConsumableArray(keys.map(function (k) {
+    return k in obj ? _defineProperty({}, k, obj[k]) : {};
+  }))));
 }
 
-class Column {
-   constructor(vueColumnComponent) {
-      const properties = pick(vueColumnComponent, [
-         'show', 'sortable', 'filterable', 'columnClass', 'label', 'index', 'highlight', 'columnHeaderClass'
-      ]);
+var Column = function Column(vueColumnComponent) {
+  _classCallCheck(this, Column);
 
-      for (const property in properties) {
-         this[property] = vueColumnComponent[property];
-      }
+  var properties = pick(vueColumnComponent, ['show', 'sortable', 'filterable', 'columnClass', 'label', 'index', 'highlight', 'columnHeaderClass']);
 
-      if (this.index) {
-         this.sortable = false;
-         this.filterable = false;
-         this.highlight = false;
-      }
+  for (var property in properties) {
+    this[property] = vueColumnComponent[property];
+  }
 
-      this.isActive = false;
-      this.sortOrder = 1;
-      this.template = vueColumnComponent.$scopedSlots.default;
-   }
-}
+  if (this.index) {
+    this.sortable = false;
+    this.filterable = false;
+    this.highlight = false;
+  }
 
-class TextFilter {
-   constructor(filterText, filterMinSize) {
-      this.filterText = filterText;
-      this.filterMinSize = filterMinSize;
-   }
+  this.isActive = false;
+  this.sortOrder = 1;
+  this.template = vueColumnComponent.$scopedSlots["default"];
+};
 
-   isValid() {
-      return typeof this.filterText == 'string' &&
-         this.filterText.length >= this.filterMinSize
-   }
-}
+var TextFilter =
+/*#__PURE__*/
+function () {
+  function TextFilter(filterText, filterMinSize) {
+    _classCallCheck(this, TextFilter);
 
-class DomainFilter {
-   constructor(vueColumnComponent) {
-      const properties = pick(vueColumnComponent, [
-         'filterBy', 'filterColumn'
-      ]);
+    this.filterText = filterText;
+    this.filterMinSize = filterMinSize;
+  }
 
-      for (const property in properties) {
-         this[property] = vueColumnComponent[property];
-      }
-   }
+  _createClass(TextFilter, [{
+    key: "isValid",
+    value: function isValid() {
+      return typeof this.filterText == 'string' && this.filterText.length >= this.filterMinSize;
+    }
+  }]);
 
-   isValid() {
-      return this.filterBy.constructor === Array &&
-         this.filterBy.length > 0 &&
-         typeof this.filterColumn == 'string'
-   }
-}
+  return TextFilter;
+}();
+
+var DomainFilter =
+/*#__PURE__*/
+function () {
+  function DomainFilter(vueColumnComponent) {
+    _classCallCheck(this, DomainFilter);
+
+    var properties = pick(vueColumnComponent, ['filterBy', 'filterColumn']);
+
+    for (var property in properties) {
+      this[property] = vueColumnComponent[property];
+    }
+  }
+
+  _createClass(DomainFilter, [{
+    key: "isValid",
+    value: function isValid() {
+      return this.filterBy.constructor === Array && this.filterBy.length > 0 && typeof this.filterColumn == 'string';
+    }
+  }]);
+
+  return DomainFilter;
+}();
 
 var CellComponent = {
-   functional: true,
-   props: ['column', 'rowData', 'rowIndex', 'textSearch'],
+  functional: true,
+  props: ['column', 'rowData', 'rowIndex', 'textSearch'],
+  render: function render(createElement, _ref) {
+    var props = _ref.props;
+    var data = {};
 
-   render(createElement, {
-      props
-   }) {
-      const data = {};
+    if (props.column.columnClass) {
+      data["class"] = props.column.columnClass;
+    }
 
-      if (props.column.columnClass) {
-         data.class = props.column.columnClass;
+    if (!props.column.index && props.column.template) {
+      return createElement('td', data, props.column.template(props.rowData));
+    }
+
+    data.domProps = {};
+
+    var highlight = function highlight(text, query) {
+      if (!query) {
+        return text;
       }
 
-      if (!props.column.index && props.column.template) {
-         return createElement('td', data, props.column.template(
-            props.rowData
-         ));
-      }
+      return text.toString().replace(new RegExp(query, "gi"), function (match) {
+        return '<span class="highlight">' + match + '</span>';
+      });
+    };
 
-      data.domProps = {};
-      let highlight = function (text, query) {
-         if (!query) {
-            return text;
-         }
-         return text.toString()
-            .replace(new RegExp(query, "gi"), match => {
-               return '<span class="highlight">' + match + '</span>';
-            });
-      };
-
-      let innerHTML =
-         props.column.index ? props.rowIndex + 1 :
-            (props.column.highlight ?
-               highlight(props.rowData[props.column.show], props.textSearch) :
-               props.rowData[props.column.show]);
-
-      data.domProps.innerHTML = innerHTML;
-
-      return createElement('td', data);
-   },
+    var innerHTML = props.column.index ? props.rowIndex + 1 : props.column.highlight ? highlight(props.rowData[props.column.show], props.textSearch) : props.rowData[props.column.show];
+    data.domProps.innerHTML = innerHTML;
+    return createElement('td', data);
+  }
 };
 
 //
@@ -113,6 +172,7 @@ var script = {
       required: true,
       type: Number
     },
+
     /**
      * Columns to be rendered
      * @required true
@@ -122,6 +182,7 @@ var script = {
       required: true,
       type: Array
     },
+
     /**
      * Data to be rendered as table row
      * @required true
@@ -131,6 +192,7 @@ var script = {
       required: true,
       type: Object
     },
+
     /**
      * Term used to filter the table. Applies only to columns with the
      * filterable property enabled.
@@ -140,11 +202,11 @@ var script = {
     filterText: {
       required: false,
       type: String,
-      default: ''
+      "default": ''
     }
   },
   computed: {
-    showData: function() {
+    showData: function showData() {
       return this;
     }
   }
@@ -273,7 +335,6 @@ var __vue_staticRenderFns__ = [];
 //
 //
 //
-
 var script$1 = {
   props: {
     /**
@@ -285,22 +346,20 @@ var script$1 = {
       required: true,
       type: Object
     },
-    columnIndex: { type: Number }
+    columnIndex: {
+      type: Number
+    }
   },
   computed: {
-    classNames() {
-      return (
-        this.column.columnHeaderClass +
-        (this.column.isActive ? ' header-active' : '') +
-        (this.column.index ? ' header-index' : '')
-      );
+    classNames: function classNames() {
+      return this.column.columnHeaderClass + (this.column.isActive ? ' header-active' : '') + (this.column.index ? ' header-index' : '');
     },
-    sortIcon() {
+    sortIcon: function sortIcon() {
       return this.column.sortOrder == 1 ? '&#9660;' : '&#9650;';
     }
   },
   methods: {
-    clickAction() {
+    clickAction: function clickAction() {
       if (!this.column.index) this.$emit('sortUpdate', this.columnIndex);
     }
   }
@@ -338,60 +397,65 @@ var __vue_staticRenderFns__$1 = [];
     undefined
   );
 
-class FilterEngine {
-   filterArray(array, sortBy, sortOrder, columns, textFilter, domainFilters = []) {
+var FilterEngine =
+/*#__PURE__*/
+function () {
+  function FilterEngine() {
+    _classCallCheck(this, FilterEngine);
+  }
 
-      const filterableColumns = this.pluck(
-         columns.filter(column => column.filterable), 'show');
+  _createClass(FilterEngine, [{
+    key: "filterArray",
+    value: function filterArray(array, sortBy, sortOrder, columns, textFilter) {
+      var domainFilters = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : [];
+      var filterableColumns = this.pluck(columns.filter(function (column) {
+        return column.filterable;
+      }), 'show');
 
       if (textFilter.isValid()) {
-         array = array.filter(function (row) {
-            return Object.keys(row)
-               .filter(function (column) {
-                  return filterableColumns.includes(column);
-               })
-               .some(function (key) {
-                  return (
-                     String(row[key])
-                        .toLowerCase()
-                        .indexOf(textFilter.filterText) >= 0
-                  );
-               });
-         });
-
+        array = array.filter(function (row) {
+          return Object.keys(row).filter(function (column) {
+            return filterableColumns.includes(column);
+          }).some(function (key) {
+            return String(row[key]).toLowerCase().indexOf(textFilter.filterText) >= 0;
+          });
+        });
       }
 
-      domainFilters.filter(filter => filter.isValid()).forEach(filter => {
-         array = array.filter(row => {
-            return filter.filterBy.includes(row[filter.filterColumn])
-         });
+      domainFilters.filter(function (filter) {
+        return filter.isValid();
+      }).forEach(function (filter) {
+        array = array.filter(function (row) {
+          return filter.filterBy.includes(row[filter.filterColumn]);
+        });
       });
-
 
       if (sortBy) {
-         array = array.slice().sort(function (a, b) {
-            a = a[sortBy];
-            b = b[sortBy];
-            return (a === b ? 0 : a > b ? 1 : -1) * sortOrder;
-         });
+        array = array.slice().sort(function (a, b) {
+          a = a[sortBy];
+          b = b[sortBy];
+          return (a === b ? 0 : a > b ? 1 : -1) * sortOrder;
+        });
       }
 
-      let rowId = 0;
-      array = array.map(row => {
-         row._id = rowId++;
-         return row;
+      var rowId = 0;
+      array = array.map(function (row) {
+        row._id = rowId++;
+        return row;
       });
-
       return array;
-   }
-
-   pluck(array, key) {
+    }
+  }, {
+    key: "pluck",
+    value: function pluck(array, key) {
       return array.reduce(function (p, v) {
-         return p.concat(v[key]);
+        return p.concat(v[key]);
       }, []);
-   }
+    }
+  }]);
 
-}
+  return FilterEngine;
+}();
 
 var filterEngine = new FilterEngine();
 
@@ -410,6 +474,7 @@ var script$2 = {
       required: true,
       type: Array
     },
+
     /**
      * Defines if caption will be displayed
      * @type {Boolean}
@@ -418,8 +483,9 @@ var script$2 = {
     showCaption: {
       required: false,
       type: Boolean,
-      default: true
+      "default": true
     },
+
     /**
      * Classes of table element.
      * @type {String}
@@ -428,6 +494,7 @@ var script$2 = {
       required: false,
       type: String
     },
+
     /**
      * Classes of tbody (table) element.
      * @type {String}
@@ -436,6 +503,7 @@ var script$2 = {
       required: false,
       type: String
     },
+
     /**
      * Term used to filter the table. Applies only to columns with the
      * filterable property enabled.
@@ -445,8 +513,9 @@ var script$2 = {
     filterText: {
       required: false,
       type: String,
-      default: ''
+      "default": ''
     },
+
     /**
      * Minimal length of the filter search field to filter the table
      * @type {Number}
@@ -455,8 +524,9 @@ var script$2 = {
     filterMinSize: {
       required: false,
       type: Number,
-      default: 2
+      "default": 2
     },
+
     /**
      * Order the table by a column
      * @type {String}
@@ -465,17 +535,19 @@ var script$2 = {
       required: false,
       type: String
     },
+
     /**
      * Order the table by a column
      * @type {String}
      */
     defaultSortOrder: {
       required: false,
-      default: 'asc',
-      validator: function(value) {
+      "default": 'asc',
+      validator: function validator(value) {
         return ['asc', 'desc'].includes(value);
       }
     },
+
     /**
      * Order the table by a column
      * @type {String}
@@ -483,58 +555,45 @@ var script$2 = {
     noDataText: {
       required: false,
       type: String,
-      default: 'No results found.'
+      "default": 'No results found.'
     }
   },
-  data: () => ({
-    columns: [],
-    domainFilters: [],
-    orderBy: null,
-    orderAscDesc: 1
-  }),
-  mounted() {
+  data: function data() {
+    return {
+      columns: [],
+      domainFilters: [],
+      orderBy: null,
+      orderAscDesc: 1
+    };
+  },
+  mounted: function mounted() {
     this.columns = this.mapVueComponentsToObjects('tu-column', 'Column');
-    this.domainFilters = this.mapVueComponentsToObjects(
-      'filter-by-domain',
-      'DomainFilter'
-    );
+    this.domainFilters = this.mapVueComponentsToObjects('filter-by-domain', 'DomainFilter');
 
     if (this.defaultSortBy) {
       this.orderBy = this.defaultSortBy;
       this.setDefaultColumn(this.defaultSortBy);
     }
 
-    this.$on('filter-by-domain-changed', function(msg) {
-      this.domainFilters = this.mapVueComponentsToObjects(
-        'filter-by-domain',
-        'DomainFilter'
-      );
+    this.$on('filter-by-domain-changed', function (msg) {
+      this.domainFilters = this.mapVueComponentsToObjects('filter-by-domain', 'DomainFilter');
     });
   },
   computed: {
-    filteredAndSortedData: function() {
-      let data = this.data;
-      let orderBy = this.orderBy;
-      let order = this.orderAscDesc;
-      let textFilter = new TextFilter(this.filterText, this.filterMinSize);
-      let domainFilters = this.domainFilters;
-
-      return filterEngine.filterArray(
-        data,
-        orderBy,
-        order,
-        this.columns,
-        textFilter,
-        domainFilters
-      );
+    filteredAndSortedData: function filteredAndSortedData() {
+      var data = this.data;
+      var orderBy = this.orderBy;
+      var order = this.orderAscDesc;
+      var textFilter = new TextFilter(this.filterText, this.filterMinSize);
+      var domainFilters = this.domainFilters;
+      return filterEngine.filterArray(data, orderBy, order, this.columns, textFilter, domainFilters);
     }
   },
   methods: {
-    updateSortColumn: function(columnIndex) {
-      for (let i = 0; i < this.columns.length; i++) {
+    updateSortColumn: function updateSortColumn(columnIndex) {
+      for (var i = 0; i < this.columns.length; i++) {
         if (i == columnIndex) {
-          if (this.columns[i].isActive)
-            this.columns[i].sortOrder = this.columns[i].sortOrder * -1;
+          if (this.columns[i].isActive) this.columns[i].sortOrder = this.columns[i].sortOrder * -1;
           this.columns[i].isActive = true;
           this.orderBy = this.columns[i].show;
           this.orderAscDesc = this.columns[i].sortOrder;
@@ -543,31 +602,36 @@ var script$2 = {
         }
       }
     },
-    setDefaultColumn: function(columnName) {
-      this.columns.forEach(element => {
+    setDefaultColumn: function setDefaultColumn(columnName) {
+      var _this = this;
+
+      this.columns.forEach(function (element) {
         if (element.show == columnName) {
           element.isActive = true;
-          if (this.defaultSortOrder == 'asc') {
+
+          if (_this.defaultSortOrder == 'asc') {
             element.sortOrder = 1;
           }
-          if (this.defaultSortOrder == 'desc') {
+
+          if (_this.defaultSortOrder == 'desc') {
             element.sortOrder = -1;
           }
-          this.orderAscDesc = element.sortOrder;
+
+          _this.orderAscDesc = element.sortOrder;
         }
       });
     },
-    mapVueComponentsToObjects: function(vueName, className) {
-      const classesMapping = {
+    mapVueComponentsToObjects: function mapVueComponentsToObjects(vueName, className) {
+      var classesMapping = {
         Column: Column,
         DomainFilter: DomainFilter
       };
-      const vueComponents = this.$children.filter(
-        el => el.$options.name == vueName
-      );
-      return vueComponents.map(
-        component => new classesMapping[className](component)
-      );
+      var vueComponents = this.$children.filter(function (el) {
+        return el.$options.name == vueName;
+      });
+      return vueComponents.map(function (component) {
+        return new classesMapping[className](component);
+      });
     }
   }
 };
@@ -610,7 +674,6 @@ var __vue_staticRenderFns__$2 = [];
 //
 //
 //
-
 var script$3 = {
   name: 'tu-column',
   props: {
@@ -622,6 +685,7 @@ var script$3 = {
       type: String,
       required: false
     },
+
     /**
      * Sets the column as sortable
      * @type {Boolean}
@@ -629,8 +693,9 @@ var script$3 = {
      */
     sortable: {
       type: Boolean,
-      default: true
+      "default": true
     },
+
     /**
      * If true, the search text will be compared to the column contents
      * @type {Boolean}
@@ -638,8 +703,9 @@ var script$3 = {
      */
     filterable: {
       type: Boolean,
-      default: true
+      "default": true
     },
+
     /**
      * If true will display the row number
      * @type {Boolean}
@@ -648,9 +714,10 @@ var script$3 = {
      */
     index: {
       type: Boolean,
-      default: false,
+      "default": false,
       required: false
     },
+
     /**
      * If true finds specified terms in your input text and adds HTML tag around them
      * @type {Boolean}
@@ -659,9 +726,10 @@ var script$3 = {
      */
     highlight: {
       type: Boolean,
-      default: false,
+      "default": false,
       required: false
     },
+
     /**
      * Sets the text of the column header
      * @type {String}
@@ -671,21 +739,23 @@ var script$3 = {
       type: String,
       required: true
     },
+
     /**
      * Classes that will be added to column
      * @type {String}
      */
     columnClass: {
       type: String,
-      default: ''
+      "default": ''
     },
+
     /**
      * Classes that will be added to column header
      * @type {String}
      */
     columnHeaderClass: {
       type: String,
-      default: ''
+      "default": ''
     }
   }
 };
@@ -726,7 +796,6 @@ var __vue_staticRenderFns__$3 = [];
 //
 //
 //
-
 var script$4 = {
   name: 'filter-by-domain',
   props: {
@@ -738,8 +807,9 @@ var script$4 = {
     filterBy: {
       required: true,
       type: Array,
-      default: ''
+      "default": ''
     },
+
     /**
      * Name of the column to be searched for
      * @required true
@@ -751,7 +821,7 @@ var script$4 = {
     }
   },
   watch: {
-    filterBy() {
+    filterBy: function filterBy() {
       this.$parent.$emit('filter-by-domain-changed', this.filterBy);
     }
   }
@@ -792,49 +862,51 @@ var __vue_staticRenderFns__$4 = [];
 
 
 var components = /*#__PURE__*/Object.freeze({
-   Tueble: Tueble,
-   Column: ColumnComponent,
-   FilterByDomain: FilterByDomain
+  Tueble: Tueble,
+  Column: ColumnComponent,
+  FilterByDomain: FilterByDomain
 });
 
 function highlightText(words, query) {
-   if (!query) {
-      return words;
-   }
-   // var iQuery = new RegExp(query, "ig");
-   return words.toString()
-      .replace(new RegExp(query, "gi"), match => {
-         return '<span class="highlight">' + match + '</span>';
-      });
+  if (!query) {
+    return words;
+  } // var iQuery = new RegExp(query, "ig");
+
+
+  return words.toString().replace(new RegExp(query, "gi"), function (match) {
+    return '<span class="highlight">' + match + '</span>';
+  });
 }
 
 // Import vue components
-// install function executed by Vue.use()
+
 function install(Vue) {
-   if (install.installed) return;
-   install.installed = true;
-   Object.keys(components).forEach((componentName) => {
-      Vue.component(componentName, components[componentName]);
-   });
-   Vue.filter('highlight', highlightText);
-}
+  if (install.installed) return;
+  install.installed = true;
+  Object.keys(components).forEach(function (componentName) {
+    Vue.component(componentName, components[componentName]);
+  });
+  Vue.filter('highlight', highlightText);
+} // Create module definition for Vue.use()
 
-// Create module definition for Vue.use()
-const plugin = {
-   install,
-};
 
-// To auto-install when vue is found
+var plugin = {
+  install: install
+}; // To auto-install when vue is found
+
 /* global window global */
-let GlobalVue = null;
+
+var GlobalVue = null;
+
 if (typeof window !== 'undefined') {
-   GlobalVue = window.Vue;
+  GlobalVue = window.Vue;
 } else if (typeof global !== 'undefined') {
-   GlobalVue = global.Vue;
+  GlobalVue = global.Vue;
 }
+
 if (GlobalVue) {
-   GlobalVue.use(plugin);
-}
+  GlobalVue.use(plugin);
+} // Default export is library as a whole, registered via Vue.use()
 
 export default plugin;
 export { ColumnComponent as Column, FilterByDomain, highlightText as HighlightText, Tueble };
