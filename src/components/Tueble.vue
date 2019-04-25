@@ -39,6 +39,7 @@ import RowComponent from './RowComponent.vue';
 import ColumnHeaderComponent from './ColumnHeaderComponent.vue';
 import filterEngine from '../FilterEngine';
 export default {
+  name: 'tu-table',
   components: {
     'tu-row': RowComponent,
     'tu-column-header': ColumnHeaderComponent

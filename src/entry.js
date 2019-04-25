@@ -6,7 +6,10 @@ function install(Vue) {
    if (install.installed) return;
    install.installed = true;
    Object.keys(components).forEach((componentName) => {
-      Vue.component(componentName, components[componentName]);
+
+      const compName = components[componentName].name ?
+         components[componentName].name : componentName;
+      Vue.component(compName, components[componentName]);
    });
    Vue.filter('highlight', HighlightText);
 }

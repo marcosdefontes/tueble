@@ -470,6 +470,7 @@ var filterEngine = new FilterEngine();
 
 //
 var script$2 = {
+  name: 'tu-table',
   components: {
     'tu-row': RowComponent,
     'tu-column-header': ColumnHeaderComponent
@@ -893,7 +894,8 @@ function install(Vue) {
   if (install.installed) return;
   install.installed = true;
   Object.keys(components).forEach(function (componentName) {
-    Vue.component(componentName, components[componentName]);
+    var compName = components[componentName].name ? components[componentName].name : componentName;
+    Vue.component(compName, components[componentName]);
   });
   Vue.filter('highlight', highlightText);
 } // Create module definition for Vue.use()
