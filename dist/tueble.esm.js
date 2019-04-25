@@ -83,7 +83,7 @@ var Column = function Column(vueColumnComponent) {
 
   this.isActive = false;
   this.sortOrder = 1;
-  this.template = vueColumnComponent.$scopedSlots["default"];
+  this.template = vueColumnComponent.$scopedSlots.default;
 };
 
 var TextFilter =
@@ -137,7 +137,7 @@ var CellComponent = {
     var data = {};
 
     if (props.column.columnClass) {
-      data["class"] = props.column.columnClass;
+      data.class = props.column.columnClass;
     }
 
     if (!props.column.index && props.column.template) {
@@ -207,7 +207,7 @@ var script = {
     filterText: {
       required: false,
       type: String,
-      "default": ''
+      default: ''
     }
   },
   computed: {
@@ -489,7 +489,7 @@ var script$2 = {
     showCaption: {
       required: false,
       type: Boolean,
-      "default": true
+      default: true
     },
 
     /**
@@ -519,7 +519,7 @@ var script$2 = {
     filterText: {
       required: false,
       type: String,
-      "default": ''
+      default: ''
     },
 
     /**
@@ -530,7 +530,7 @@ var script$2 = {
     filterMinSize: {
       required: false,
       type: Number,
-      "default": 2
+      default: 2
     },
 
     /**
@@ -548,7 +548,7 @@ var script$2 = {
      */
     defaultSortOrder: {
       required: false,
-      "default": 'asc',
+      default: 'asc',
       validator: function validator(value) {
         return ['asc', 'desc'].includes(value);
       }
@@ -561,7 +561,7 @@ var script$2 = {
     noDataText: {
       required: false,
       type: String,
-      "default": 'No results found.'
+      default: 'No results found.'
     }
   },
   data: function data() {
@@ -699,7 +699,7 @@ var script$3 = {
      */
     sortable: {
       type: Boolean,
-      "default": true
+      default: true
     },
 
     /**
@@ -709,7 +709,7 @@ var script$3 = {
      */
     filterable: {
       type: Boolean,
-      "default": true
+      default: true
     },
 
     /**
@@ -720,7 +720,7 @@ var script$3 = {
      */
     index: {
       type: Boolean,
-      "default": false,
+      default: false,
       required: false
     },
 
@@ -732,7 +732,7 @@ var script$3 = {
      */
     highlight: {
       type: Boolean,
-      "default": false,
+      default: false,
       required: false
     },
 
@@ -752,7 +752,7 @@ var script$3 = {
      */
     columnClass: {
       type: String,
-      "default": ''
+      default: ''
     },
 
     /**
@@ -761,7 +761,7 @@ var script$3 = {
      */
     columnHeaderClass: {
       type: String,
-      "default": ''
+      default: ''
     }
   }
 };
@@ -813,7 +813,7 @@ var script$4 = {
     filterBy: {
       required: true,
       type: Array,
-      "default": ''
+      default: ''
     },
 
     /**

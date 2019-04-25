@@ -96,7 +96,7 @@ function genConfig(opts) {
 
    // If the file needs to be transpiled, appy the babel plugin
    if (opts.transpile !== false) {
-      config.plugins.push(babel({ extensions, include: ['src/**/*'] }))
+      config.plugins.push(babel({ extensions, include: ['src/**/*'], exclude: 'node_modules/**' }))
    }
 
    //If minify use terser to minify the code

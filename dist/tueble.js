@@ -89,7 +89,7 @@
 
     this.isActive = false;
     this.sortOrder = 1;
-    this.template = vueColumnComponent.$scopedSlots["default"];
+    this.template = vueColumnComponent.$scopedSlots.default;
   };
 
   var TextFilter =
@@ -143,7 +143,7 @@
       var data = {};
 
       if (props.column.columnClass) {
-        data["class"] = props.column.columnClass;
+        data.class = props.column.columnClass;
       }
 
       if (!props.column.index && props.column.template) {
@@ -213,7 +213,7 @@
       filterText: {
         required: false,
         type: String,
-        "default": ''
+        default: ''
       }
     },
     computed: {
@@ -495,7 +495,7 @@
       showCaption: {
         required: false,
         type: Boolean,
-        "default": true
+        default: true
       },
 
       /**
@@ -525,7 +525,7 @@
       filterText: {
         required: false,
         type: String,
-        "default": ''
+        default: ''
       },
 
       /**
@@ -536,7 +536,7 @@
       filterMinSize: {
         required: false,
         type: Number,
-        "default": 2
+        default: 2
       },
 
       /**
@@ -554,7 +554,7 @@
        */
       defaultSortOrder: {
         required: false,
-        "default": 'asc',
+        default: 'asc',
         validator: function validator(value) {
           return ['asc', 'desc'].includes(value);
         }
@@ -567,7 +567,7 @@
       noDataText: {
         required: false,
         type: String,
-        "default": 'No results found.'
+        default: 'No results found.'
       }
     },
     data: function data() {
@@ -705,7 +705,7 @@
        */
       sortable: {
         type: Boolean,
-        "default": true
+        default: true
       },
 
       /**
@@ -715,7 +715,7 @@
        */
       filterable: {
         type: Boolean,
-        "default": true
+        default: true
       },
 
       /**
@@ -726,7 +726,7 @@
        */
       index: {
         type: Boolean,
-        "default": false,
+        default: false,
         required: false
       },
 
@@ -738,7 +738,7 @@
        */
       highlight: {
         type: Boolean,
-        "default": false,
+        default: false,
         required: false
       },
 
@@ -758,7 +758,7 @@
        */
       columnClass: {
         type: String,
-        "default": ''
+        default: ''
       },
 
       /**
@@ -767,7 +767,7 @@
        */
       columnHeaderClass: {
         type: String,
-        "default": ''
+        default: ''
       }
     }
   };
@@ -819,7 +819,7 @@
       filterBy: {
         required: true,
         type: Array,
-        "default": ''
+        default: ''
       },
 
       /**
