@@ -137,7 +137,23 @@
 
   var CellComponent = {
     functional: true,
-    props: ['column', 'rowData', 'rowIndex', 'textSearch'],
+    props: {
+      column: {
+        type: Object,
+        required: true
+      },
+      rowData: {
+        type: Object,
+        required: true
+      },
+      rowIndex: {
+        type: Number
+      },
+      textSearch: {
+        type: String,
+        required: false
+      }
+    },
     render: function render(createElement, _ref) {
       var props = _ref.props;
       var data = {};
