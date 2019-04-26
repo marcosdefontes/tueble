@@ -133,7 +133,8 @@ function () {
   return DomainFilter;
 }();
 
-var CellComponent = {
+var BaseCell = {
+  name: 'tu-cell',
   functional: true,
   props: {
     column: {
@@ -184,8 +185,9 @@ var CellComponent = {
 
 //
 var script = {
+  name: 'tu-row',
   components: {
-    'tu-cell': CellComponent
+    'tu-cell': BaseCell
   },
   props: {
     /**
@@ -343,7 +345,7 @@ var __vue_staticRenderFns__ = [];
   
 
   
-  var RowComponent = normalizeComponent_1(
+  var BaseRow = normalizeComponent_1(
     { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
     __vue_inject_styles__,
     __vue_script__,
@@ -361,6 +363,7 @@ var __vue_staticRenderFns__ = [];
 //
 //
 var script$1 = {
+  name: 'tu-column-header',
   props: {
     /**
      * Column object
@@ -411,7 +414,7 @@ var __vue_staticRenderFns__$1 = [];
   
 
   
-  var ColumnHeaderComponent = normalizeComponent_1(
+  var BaseColumnHeader = normalizeComponent_1(
     { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
     __vue_inject_styles__$1,
     __vue_script__$1,
@@ -488,8 +491,8 @@ var filterEngine = new FilterEngine();
 var script$2 = {
   name: 'tu-table',
   components: {
-    'tu-row': RowComponent,
-    'tu-column-header': ColumnHeaderComponent
+    'tu-row': BaseRow,
+    'tu-column-header': BaseColumnHeader
   },
   props: {
     /**
@@ -807,7 +810,7 @@ var __vue_staticRenderFns__$3 = [];
   
 
   
-  var ColumnComponent = normalizeComponent_1(
+  var BaseColumn = normalizeComponent_1(
     { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
     __vue_inject_styles__$3,
     __vue_script__$3,
@@ -889,7 +892,7 @@ var __vue_staticRenderFns__$4 = [];
 
 var components = /*#__PURE__*/Object.freeze({
   Tueble: Tueble,
-  Column: ColumnComponent,
+  BaseColumn: BaseColumn,
   FilterByDomain: FilterByDomain
 });
 
@@ -935,7 +938,7 @@ if (GlobalVue) {
   GlobalVue.use(plugin);
 } // Default export is library as a whole, registered via Vue.use()
 
-exports.Column = ColumnComponent;
+exports.BaseColumn = BaseColumn;
 exports.FilterByDomain = FilterByDomain;
 exports.HighlightText = highlightText;
 exports.Tueble = Tueble;

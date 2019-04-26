@@ -11,10 +11,11 @@
   </tr>
 </template>
 <script>
-import CellComponent from './CellComponent.js';
+import BaseCell from './BaseCell.js';
 export default {
+  name: 'tu-row',
   components: {
-    'tu-cell': CellComponent
+    'tu-cell': BaseCell
   },
   props: {
     /**

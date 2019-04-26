@@ -32,17 +32,20 @@
 </template>
 
 <script>
+// Classes
 import Column from '../classes/Column';
 import TextFilter from '../classes/TextFilter';
 import DomainFilter from '../classes/DomainFilter';
-import RowComponent from './RowComponent.vue';
-import ColumnHeaderComponent from './ColumnHeaderComponent.vue';
+// Components
+import BaseRow from './BaseRow.vue';
+import BaseColumnHeader from './BaseColumnHeader.vue';
+// Others
 import filterEngine from '../FilterEngine';
 export default {
   name: 'tu-table',
   components: {
-    'tu-row': RowComponent,
-    'tu-column-header': ColumnHeaderComponent
+    'tu-row': BaseRow,
+    'tu-column-header': BaseColumnHeader
   },
   props: {
     /**

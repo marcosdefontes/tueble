@@ -1,4 +1,5 @@
 export default {
+   name: 'tu-cell',
    functional: true,
    props: {
       column: {

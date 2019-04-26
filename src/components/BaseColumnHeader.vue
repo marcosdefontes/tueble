@@ -6,6 +6,7 @@
 </template>
 <script>
 export default {
+  name: 'tu-column-header',
   props: {
     /**
      * Column object
