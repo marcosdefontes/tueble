@@ -130,7 +130,7 @@ function () {
 }();
 
 var BaseCell = {
-  name: 'tu-cell',
+  name: 'BaseCell',
   functional: true,
   props: {
     column: {
@@ -181,9 +181,9 @@ var BaseCell = {
 
 //
 var script = {
-  name: 'tu-row',
+  name: 'BaseRow',
   components: {
-    'tu-cell': BaseCell
+    BaseCell: BaseCell
   },
   props: {
     /**
@@ -324,7 +324,7 @@ var normalizeComponent_1 = normalizeComponent;
 const __vue_script__ = script;
 
 /* template */
-var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',_vm._l((_vm.columns),function(column){return _c('tu-cell',{key:column.id,attrs:{"column":column,"row-data":_vm.rowData,"row-index":_vm.rowIndex,"text-search":_vm.filterText}})}))};
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',_vm._l((_vm.columns),function(column){return _c('BaseCell',{key:column.id,attrs:{"column":column,"row-data":_vm.rowData,"row-index":_vm.rowIndex,"text-search":_vm.filterText}})}))};
 var __vue_staticRenderFns__ = [];
 
   /* style */
@@ -359,7 +359,7 @@ var __vue_staticRenderFns__ = [];
 //
 //
 var script$1 = {
-  name: 'tu-column-header',
+  name: 'BaseColumnHeader',
   props: {
     /**
      * Column object
@@ -487,8 +487,8 @@ var filterEngine = new FilterEngine();
 var script$2 = {
   name: 'tu-table',
   components: {
-    'tu-row': BaseRow,
-    'tu-column-header': BaseColumnHeader
+    BaseRow: BaseRow,
+    BaseColumnHeader: BaseColumnHeader
   },
   props: {
     /**
@@ -592,16 +592,16 @@ var script$2 = {
     };
   },
   mounted: function mounted() {
-    this.columns = this.mapVueComponentsToObjects('tu-column', 'Column');
-    this.domainFilters = this.mapVueComponentsToObjects('filter-by-domain', 'DomainFilter');
+    this.columns = this.mapVueComponentsToObjects('TuebleColumn', 'Column');
+    this.domainFilters = this.mapVueComponentsToObjects('FilterByDomain', 'DomainFilter');
 
     if (this.defaultSortBy) {
       this.orderBy = this.defaultSortBy;
       this.setDefaultColumn(this.defaultSortBy);
     }
 
-    this.$on('filter-by-domain-changed', function (msg) {
-      this.domainFilters = this.mapVueComponentsToObjects('filter-by-domain', 'DomainFilter');
+    this.$on('FilterByDomainChanged', function (msg) {
+      this.domainFilters = this.mapVueComponentsToObjects('FilterByDomain', 'DomainFilter');
     });
   },
   computed: {
@@ -665,7 +665,7 @@ var script$2 = {
 const __vue_script__$2 = script$2;
 
 /* template */
-var __vue_render__$2 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tueble-component"},[_c('table',{class:_vm.tableClass},[(_vm.showCaption)?_c('caption'):_vm._e(),_vm._v(" "),(_vm.filteredAndSortedData.length == 0)?_c('p',{staticClass:"no-results"},[_vm._v(_vm._s(_vm.noDataText))]):_vm._e(),_vm._v(" "),_c('thead',[_c('tr',_vm._l((_vm.columns),function(column,index){return _c('tu-column-header',{key:column.id,attrs:{"column":column,"column-index":index},on:{"sortUpdate":_vm.updateSortColumn}})}))]),_vm._v(" "),_c('tbody',{class:_vm.tableBodyClass},_vm._l((_vm.filteredAndSortedData),function(row,index){return _c('tu-row',{key:row._id,attrs:{"columns":_vm.columns,"row-index":index,"row-data":row,"filter-text":_vm.filterText}})}))]),_vm._v(" "),_c('div',{staticStyle:{"display":"none"}},[_vm._t("default")],2)])};
+var __vue_render__$2 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tueble-component"},[_c('table',{class:_vm.tableClass},[(_vm.showCaption)?_c('caption'):_vm._e(),_vm._v(" "),(_vm.filteredAndSortedData.length == 0)?_c('p',{staticClass:"no-results"},[_vm._v(_vm._s(_vm.noDataText))]):_vm._e(),_vm._v(" "),_c('thead',[_c('tr',_vm._l((_vm.columns),function(column,index){return _c('BaseColumnHeader',{key:column.id,attrs:{"column":column,"column-index":index},on:{"sortUpdate":_vm.updateSortColumn}})}))]),_vm._v(" "),_c('tbody',{class:_vm.tableBodyClass},_vm._l((_vm.filteredAndSortedData),function(row,index){return _c('BaseRow',{key:row._id,attrs:{"columns":_vm.columns,"row-index":index,"row-data":row,"filter-text":_vm.filterText}})}))]),_vm._v(" "),_c('div',{staticStyle:{"display":"none"}},[_vm._t("default")],2)])};
 var __vue_staticRenderFns__$2 = [];
 
   /* style */
@@ -700,7 +700,7 @@ var __vue_staticRenderFns__$2 = [];
 //
 //
 var script$3 = {
-  name: 'tu-column',
+  name: 'TuebleColumn',
   props: {
     /**
      * Sets which object's property to display
@@ -806,7 +806,7 @@ var __vue_staticRenderFns__$3 = [];
   
 
   
-  var BaseColumn = normalizeComponent_1(
+  var TuebleColumn = normalizeComponent_1(
     { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
     __vue_inject_styles__$3,
     __vue_script__$3,
@@ -822,7 +822,7 @@ var __vue_staticRenderFns__$3 = [];
 //
 //
 var script$4 = {
-  name: 'filter-by-domain',
+  name: 'FilterByDomain',
   props: {
     /**
      * Set of elements to be checked in the column provided
@@ -847,7 +847,7 @@ var script$4 = {
   },
   watch: {
     filterBy: function filterBy() {
-      this.$parent.$emit('filter-by-domain-changed', this.filterBy);
+      this.$parent.$emit('FilterByDomainChanged', this.filterBy);
     }
   }
 };
@@ -888,7 +888,7 @@ var __vue_staticRenderFns__$4 = [];
 
 var components = /*#__PURE__*/Object.freeze({
   Tueble: Tueble,
-  BaseColumn: BaseColumn,
+  TuebleColumn: TuebleColumn,
   FilterByDomain: FilterByDomain
 });
 
@@ -935,4 +935,4 @@ if (GlobalVue) {
 } // Default export is library as a whole, registered via Vue.use()
 
 export default plugin;
-export { BaseColumn, FilterByDomain, highlightText as HighlightText, Tueble };
+export { FilterByDomain, highlightText as HighlightText, Tueble, TuebleColumn };

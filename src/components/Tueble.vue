@@ -5,24 +5,24 @@
       <p class="no-results" v-if="filteredAndSortedData.length == 0">{{noDataText}}</p>
       <thead>
         <tr>
-          <tu-column-header
+          <BaseColumnHeader
             v-for="(column, index) in columns"
             :key="column.id"
             :column="column"
             :column-index="index"
             @sortUpdate="updateSortColumn"
-          ></tu-column-header>
+          ></BaseColumnHeader>
         </tr>
       </thead>
       <tbody :class="tableBodyClass">
-        <tu-row
+        <BaseRow
           v-for="(row, index) in filteredAndSortedData"
           :key="row._id"
           :columns="columns"
           :row-index="index"
           :row-data="row"
           :filter-text="filterText"
-        ></tu-row>
+        ></BaseRow>
       </tbody>
     </table>
     <div style="display:none;">
@@ -44,8 +44,8 @@ import filterEngine from '../FilterEngine';
 export default {
   name: 'tu-table',
   components: {
-    'tu-row': BaseRow,
-    'tu-column-header': BaseColumnHeader
+    BaseRow,
+    BaseColumnHeader
   },
   props: {
     /**
@@ -139,9 +139,9 @@ export default {
     orderAscDesc: 1
   }),
   mounted() {
-    this.columns = this.mapVueComponentsToObjects('tu-column', 'Column');
+    this.columns = this.mapVueComponentsToObjects('TuebleColumn', 'Column');
     this.domainFilters = this.mapVueComponentsToObjects(
-      'filter-by-domain',
+      'FilterByDomain',
       'DomainFilter'
     );
 
@@ -150,9 +150,9 @@ export default {
       this.setDefaultColumn(this.defaultSortBy);
     }
 
-    this.$on('filter-by-domain-changed', function(msg) {
+    this.$on('FilterByDomainChanged', function(msg) {
       this.domainFilters = this.mapVueComponentsToObjects(
-        'filter-by-domain',
+        'FilterByDomain',
         'DomainFilter'
       );
     });

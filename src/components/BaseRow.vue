@@ -1,22 +1,20 @@
 <template>
   <tr>
-    <tu-cell
+    <BaseCell
       v-for="column in columns"
       :key="column.id"
       :column="column"
       :row-data="rowData"
       :row-index="rowIndex"
       :text-search="filterText"
-    ></tu-cell>
+    ></BaseCell>
   </tr>
 </template>
 <script>
 import BaseCell from './BaseCell.js';
 export default {
-  name: 'tu-row',
-  components: {
-    'tu-cell': BaseCell
-  },
+  name: 'BaseRow',
+  components: { BaseCell },
   props: {
     /**
      * Table row number

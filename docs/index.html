@@ -42,18 +42,18 @@
                       { firstName: 'Ringo', birthday: '07/07/1940', songs: 2 },
                       ]" table-class="table is-fullwidth" table-body-class="tbody" default-sort-by="firstName"
                :filter-text="searchKey" :filter-min-size="2">
-               <tu-column :index="true" label="#"></tu-column>
-               <tu-column label="First Name" show="firstName" :filterable="true">
+               <tueble-column :index="true" label="#"></tueble-column>
+               <tueble-column label="First Name" show="firstName" :filterable="true">
                   <template slot-scope="row">
                      <a :href="`#${row.firstName}`" v-html="$options.filters.highlight(row.firstName,searchKey)"></a>
                   </template>
-               </tu-column>
-               <tu-column label="First Name" show="firstName" :filterable="true" :highlight="true">
-               </tu-column>
-               <tu-column label="Birthday" show="birthday"></tu-column>
-               <tu-column label="Songs" show="songs" column-header-class="center" column-class="center"
+               </tueble-column>
+               <tueble-column label="First Name" show="firstName" :filterable="true" :highlight="true">
+               </tueble-column>
+               <tueble-column label="Birthday" show="birthday"></tueble-column>
+               <tueble-column label="Songs" show="songs" column-header-class="center" column-class="center"
                   :highlight="true">
-               </tu-column>
+               </tueble-column>
                <filter-by-domain :filter-by="names" filter-column="firstName"></filter-by-domain>
             </tu-table>
          </div>
