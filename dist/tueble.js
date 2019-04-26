@@ -597,6 +597,16 @@
         orderAscDesc: 1
       };
     },
+    computed: {
+      filteredAndSortedData: function filteredAndSortedData() {
+        var data = this.data;
+        var orderBy = this.orderBy;
+        var order = this.orderAscDesc;
+        var textFilter = new TextFilter(this.filterText, this.filterMinSize);
+        var domainFilters = this.domainFilters;
+        return filterEngine.filterArray(data, orderBy, order, this.columns, textFilter, domainFilters);
+      }
+    },
     mounted: function mounted() {
       this.columns = this.mapVueComponentsToObjects('TuebleColumn', 'Column');
       this.domainFilters = this.mapVueComponentsToObjects('FilterByDomain', 'DomainFilter');
@@ -609,16 +619,6 @@
       this.$on('FilterByDomainChanged', function (msg) {
         this.domainFilters = this.mapVueComponentsToObjects('FilterByDomain', 'DomainFilter');
       });
-    },
-    computed: {
-      filteredAndSortedData: function filteredAndSortedData() {
-        var data = this.data;
-        var orderBy = this.orderBy;
-        var order = this.orderAscDesc;
-        var textFilter = new TextFilter(this.filterText, this.filterMinSize);
-        var domainFilters = this.domainFilters;
-        return filterEngine.filterArray(data, orderBy, order, this.columns, textFilter, domainFilters);
-      }
     },
     methods: {
       updateSortColumn: function updateSortColumn(columnIndex) {

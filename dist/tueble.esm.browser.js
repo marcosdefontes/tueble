@@ -515,6 +515,24 @@ var script$2 = {
     orderBy: null,
     orderAscDesc: 1
   }),
+  computed: {
+    filteredAndSortedData: function() {
+      let data = this.data;
+      let orderBy = this.orderBy;
+      let order = this.orderAscDesc;
+      let textFilter = new TextFilter(this.filterText, this.filterMinSize);
+      let domainFilters = this.domainFilters;
+
+      return filterEngine.filterArray(
+        data,
+        orderBy,
+        order,
+        this.columns,
+        textFilter,
+        domainFilters
+      );
+    }
+  },
   mounted() {
     this.columns = this.mapVueComponentsToObjects('TuebleColumn', 'Column');
     this.domainFilters = this.mapVueComponentsToObjects(
@@ -533,24 +551,6 @@ var script$2 = {
         'DomainFilter'
       );
     });
-  },
-  computed: {
-    filteredAndSortedData: function() {
-      let data = this.data;
-      let orderBy = this.orderBy;
-      let order = this.orderAscDesc;
-      let textFilter = new TextFilter(this.filterText, this.filterMinSize);
-      let domainFilters = this.domainFilters;
-
-      return filterEngine.filterArray(
-        data,
-        orderBy,
-        order,
-        this.columns,
-        textFilter,
-        domainFilters
-      );
-    }
   },
   methods: {
     updateSortColumn: function(columnIndex) {
