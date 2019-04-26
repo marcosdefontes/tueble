@@ -1,10 +1,9 @@
 import Tueble from './Tueble.vue';
-import Column from './ColumnComponent.vue';
+import TuebleColumn from './TuebleColumn.vue';
 import FilterByDomain from './FilterByDomain.vue';
 
 export {
    Tueble,
-   Column,
+   TuebleColumn,
    FilterByDomain
-
 };

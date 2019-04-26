@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'tu-column',
+  name: 'TuebleColumn',
   props: {
     /**
      * Sets which object's property to display

@@ -5,24 +5,24 @@
       <p class="no-results" v-if="filteredAndSortedData.length == 0">{{noDataText}}</p>
       <thead>
         <tr>
-          <tu-column-header
+          <BaseColumnHeader
             v-for="(column, index) in columns"
             :key="column.id"
             :column="column"
             :column-index="index"
             @sortUpdate="updateSortColumn"
-          ></tu-column-header>
+          ></BaseColumnHeader>
         </tr>
       </thead>
       <tbody :class="tableBodyClass">
-        <tu-row
+        <BaseRow
           v-for="(row, index) in filteredAndSortedData"
           :key="row._id"
           :columns="columns"
           :row-index="index"
           :row-data="row"
           :filter-text="filterText"
-        ></tu-row>
+        ></BaseRow>
       </tbody>
     </table>
     <div style="display:none;">
@@ -32,16 +32,20 @@
 </template>
 
 <script>
+// Classes
 import Column from '../classes/Column';
 import TextFilter from '../classes/TextFilter';
 import DomainFilter from '../classes/DomainFilter';
-import RowComponent from './RowComponent.vue';
-import ColumnHeaderComponent from './ColumnHeaderComponent.vue';
+// Components
+import BaseRow from './BaseRow.vue';
+import BaseColumnHeader from './BaseColumnHeader.vue';
+// Others
 import filterEngine from '../FilterEngine';
 export default {
+  name: 'tu-table',
   components: {
-    'tu-row': RowComponent,
-    'tu-column-header': ColumnHeaderComponent
+    BaseRow,
+    BaseColumnHeader
   },
   props: {
     /**
@@ -134,25 +138,6 @@ export default {
     orderBy: null,
     orderAscDesc: 1
   }),
-  mounted() {
-    this.columns = this.mapVueComponentsToObjects('tu-column', 'Column');
-    this.domainFilters = this.mapVueComponentsToObjects(
-      'filter-by-domain',
-      'DomainFilter'
-    );
-
-    if (this.defaultSortBy) {
-      this.orderBy = this.defaultSortBy;
-      this.setDefaultColumn(this.defaultSortBy);
-    }
-
-    this.$on('filter-by-domain-changed', function(msg) {
-      this.domainFilters = this.mapVueComponentsToObjects(
-        'filter-by-domain',
-        'DomainFilter'
-      );
-    });
-  },
   computed: {
     filteredAndSortedData: function() {
       let data = this.data;
@@ -170,6 +155,25 @@ export default {
         domainFilters
       );
     }
+  },
+  mounted() {
+    this.columns = this.mapVueComponentsToObjects('TuebleColumn', 'Column');
+    this.domainFilters = this.mapVueComponentsToObjects(
+      'FilterByDomain',
+      'DomainFilter'
+    );
+
+    if (this.defaultSortBy) {
+      this.orderBy = this.defaultSortBy;
+      this.setDefaultColumn(this.defaultSortBy);
+    }
+
+    this.$on('FilterByDomainChanged', function(msg) {
+      this.domainFilters = this.mapVueComponentsToObjects(
+        'FilterByDomain',
+        'DomainFilter'
+      );
+    });
   },
   methods: {
     updateSortColumn: function(columnIndex) {

@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'filter-by-domain',
+  name: 'FilterByDomain',
   props: {
     /**
      * Set of elements to be checked in the column provided
@@ -28,7 +28,7 @@ export default {
   },
   watch: {
     filterBy() {
-      this.$parent.$emit('filter-by-domain-changed', this.filterBy);
+      this.$parent.$emit('FilterByDomainChanged', this.filterBy);
     }
   }
 };

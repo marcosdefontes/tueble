@@ -1,0 +1,23 @@
+body {
+   background: #ebedee;
+}
+
+th {
+   cursor: pointer;
+}
+
+th.header-active {
+   color: blueviolet;
+}
+
+th.header-index {
+   cursor: default;
+}
+
+span.highlight {
+   background-color: yellow;
+}
+
+option.disabled {
+   color: grey;
+}

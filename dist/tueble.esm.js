@@ -83,7 +83,7 @@ var Column = function Column(vueColumnComponent) {
 
   this.isActive = false;
   this.sortOrder = 1;
-  this.template = vueColumnComponent.$scopedSlots["default"];
+  this.template = vueColumnComponent.$scopedSlots.default;
 };
 
 var TextFilter =
@@ -129,15 +129,32 @@ function () {
   return DomainFilter;
 }();
 
-var CellComponent = {
+var BaseCell = {
+  name: 'BaseCell',
   functional: true,
-  props: ['column', 'rowData', 'rowIndex', 'textSearch'],
+  props: {
+    column: {
+      type: Object,
+      required: true
+    },
+    rowData: {
+      type: Object,
+      required: true
+    },
+    rowIndex: {
+      type: Number
+    },
+    textSearch: {
+      type: String,
+      required: false
+    }
+  },
   render: function render(createElement, _ref) {
     var props = _ref.props;
     var data = {};
 
     if (props.column.columnClass) {
-      data["class"] = props.column.columnClass;
+      data.class = props.column.columnClass;
     }
 
     if (!props.column.index && props.column.template) {
@@ -164,8 +181,9 @@ var CellComponent = {
 
 //
 var script = {
+  name: 'BaseRow',
   components: {
-    'tu-cell': CellComponent
+    BaseCell: BaseCell
   },
   props: {
     /**
@@ -207,7 +225,7 @@ var script = {
     filterText: {
       required: false,
       type: String,
-      "default": ''
+      default: ''
     }
   },
   computed: {
@@ -306,7 +324,7 @@ var normalizeComponent_1 = normalizeComponent;
 const __vue_script__ = script;
 
 /* template */
-var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',_vm._l((_vm.columns),function(column){return _c('tu-cell',{key:column.id,attrs:{"column":column,"row-data":_vm.rowData,"row-index":_vm.rowIndex,"text-search":_vm.filterText}})}))};
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',_vm._l((_vm.columns),function(column){return _c('BaseCell',{key:column.id,attrs:{"column":column,"row-data":_vm.rowData,"row-index":_vm.rowIndex,"text-search":_vm.filterText}})}))};
 var __vue_staticRenderFns__ = [];
 
   /* style */
@@ -323,7 +341,7 @@ var __vue_staticRenderFns__ = [];
   
 
   
-  var RowComponent = normalizeComponent_1(
+  var BaseRow = normalizeComponent_1(
     { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
     __vue_inject_styles__,
     __vue_script__,
@@ -341,6 +359,7 @@ var __vue_staticRenderFns__ = [];
 //
 //
 var script$1 = {
+  name: 'BaseColumnHeader',
   props: {
     /**
      * Column object
@@ -391,7 +410,7 @@ var __vue_staticRenderFns__$1 = [];
   
 
   
-  var ColumnHeaderComponent = normalizeComponent_1(
+  var BaseColumnHeader = normalizeComponent_1(
     { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
     __vue_inject_styles__$1,
     __vue_script__$1,
@@ -466,9 +485,10 @@ var filterEngine = new FilterEngine();
 
 //
 var script$2 = {
+  name: 'tu-table',
   components: {
-    'tu-row': RowComponent,
-    'tu-column-header': ColumnHeaderComponent
+    BaseRow: BaseRow,
+    BaseColumnHeader: BaseColumnHeader
   },
   props: {
     /**
@@ -488,7 +508,7 @@ var script$2 = {
     showCaption: {
       required: false,
       type: Boolean,
-      "default": true
+      default: true
     },
 
     /**
@@ -518,7 +538,7 @@ var script$2 = {
     filterText: {
       required: false,
       type: String,
-      "default": ''
+      default: ''
     },
 
     /**
@@ -529,7 +549,7 @@ var script$2 = {
     filterMinSize: {
       required: false,
       type: Number,
-      "default": 2
+      default: 2
     },
 
     /**
@@ -547,7 +567,7 @@ var script$2 = {
      */
     defaultSortOrder: {
       required: false,
-      "default": 'asc',
+      default: 'asc',
       validator: function validator(value) {
         return ['asc', 'desc'].includes(value);
       }
@@ -560,7 +580,7 @@ var script$2 = {
     noDataText: {
       required: false,
       type: String,
-      "default": 'No results found.'
+      default: 'No results found.'
     }
   },
   data: function data() {
@@ -571,19 +591,6 @@ var script$2 = {
       orderAscDesc: 1
     };
   },
-  mounted: function mounted() {
-    this.columns = this.mapVueComponentsToObjects('tu-column', 'Column');
-    this.domainFilters = this.mapVueComponentsToObjects('filter-by-domain', 'DomainFilter');
-
-    if (this.defaultSortBy) {
-      this.orderBy = this.defaultSortBy;
-      this.setDefaultColumn(this.defaultSortBy);
-    }
-
-    this.$on('filter-by-domain-changed', function (msg) {
-      this.domainFilters = this.mapVueComponentsToObjects('filter-by-domain', 'DomainFilter');
-    });
-  },
   computed: {
     filteredAndSortedData: function filteredAndSortedData() {
       var data = this.data;
@@ -593,6 +600,19 @@ var script$2 = {
       var domainFilters = this.domainFilters;
       return filterEngine.filterArray(data, orderBy, order, this.columns, textFilter, domainFilters);
     }
+  },
+  mounted: function mounted() {
+    this.columns = this.mapVueComponentsToObjects('TuebleColumn', 'Column');
+    this.domainFilters = this.mapVueComponentsToObjects('FilterByDomain', 'DomainFilter');
+
+    if (this.defaultSortBy) {
+      this.orderBy = this.defaultSortBy;
+      this.setDefaultColumn(this.defaultSortBy);
+    }
+
+    this.$on('FilterByDomainChanged', function (msg) {
+      this.domainFilters = this.mapVueComponentsToObjects('FilterByDomain', 'DomainFilter');
+    });
   },
   methods: {
     updateSortColumn: function updateSortColumn(columnIndex) {
@@ -645,7 +665,7 @@ var script$2 = {
 const __vue_script__$2 = script$2;
 
 /* template */
-var __vue_render__$2 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tueble-component"},[_c('table',{class:_vm.tableClass},[(_vm.showCaption)?_c('caption'):_vm._e(),_vm._v(" "),(_vm.filteredAndSortedData.length == 0)?_c('p',{staticClass:"no-results"},[_vm._v(_vm._s(_vm.noDataText))]):_vm._e(),_vm._v(" "),_c('thead',[_c('tr',_vm._l((_vm.columns),function(column,index){return _c('tu-column-header',{key:column.id,attrs:{"column":column,"column-index":index},on:{"sortUpdate":_vm.updateSortColumn}})}))]),_vm._v(" "),_c('tbody',{class:_vm.tableBodyClass},_vm._l((_vm.filteredAndSortedData),function(row,index){return _c('tu-row',{key:row._id,attrs:{"columns":_vm.columns,"row-index":index,"row-data":row,"filter-text":_vm.filterText}})}))]),_vm._v(" "),_c('div',{staticStyle:{"display":"none"}},[_vm._t("default")],2)])};
+var __vue_render__$2 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tueble-component"},[_c('table',{class:_vm.tableClass},[(_vm.showCaption)?_c('caption'):_vm._e(),_vm._v(" "),(_vm.filteredAndSortedData.length == 0)?_c('p',{staticClass:"no-results"},[_vm._v(_vm._s(_vm.noDataText))]):_vm._e(),_vm._v(" "),_c('thead',[_c('tr',_vm._l((_vm.columns),function(column,index){return _c('BaseColumnHeader',{key:column.id,attrs:{"column":column,"column-index":index},on:{"sortUpdate":_vm.updateSortColumn}})}))]),_vm._v(" "),_c('tbody',{class:_vm.tableBodyClass},_vm._l((_vm.filteredAndSortedData),function(row,index){return _c('BaseRow',{key:row._id,attrs:{"columns":_vm.columns,"row-index":index,"row-data":row,"filter-text":_vm.filterText}})}))]),_vm._v(" "),_c('div',{staticStyle:{"display":"none"}},[_vm._t("default")],2)])};
 var __vue_staticRenderFns__$2 = [];
 
   /* style */
@@ -680,7 +700,7 @@ var __vue_staticRenderFns__$2 = [];
 //
 //
 var script$3 = {
-  name: 'tu-column',
+  name: 'TuebleColumn',
   props: {
     /**
      * Sets which object's property to display
@@ -698,7 +718,7 @@ var script$3 = {
      */
     sortable: {
       type: Boolean,
-      "default": true
+      default: true
     },
 
     /**
@@ -708,7 +728,7 @@ var script$3 = {
      */
     filterable: {
       type: Boolean,
-      "default": true
+      default: true
     },
 
     /**
@@ -719,7 +739,7 @@ var script$3 = {
      */
     index: {
       type: Boolean,
-      "default": false,
+      default: false,
       required: false
     },
 
@@ -731,7 +751,7 @@ var script$3 = {
      */
     highlight: {
       type: Boolean,
-      "default": false,
+      default: false,
       required: false
     },
 
@@ -751,7 +771,7 @@ var script$3 = {
      */
     columnClass: {
       type: String,
-      "default": ''
+      default: ''
     },
 
     /**
@@ -760,7 +780,7 @@ var script$3 = {
      */
     columnHeaderClass: {
       type: String,
-      "default": ''
+      default: ''
     }
   }
 };
@@ -786,7 +806,7 @@ var __vue_staticRenderFns__$3 = [];
   
 
   
-  var ColumnComponent = normalizeComponent_1(
+  var TuebleColumn = normalizeComponent_1(
     { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
     __vue_inject_styles__$3,
     __vue_script__$3,
@@ -802,7 +822,7 @@ var __vue_staticRenderFns__$3 = [];
 //
 //
 var script$4 = {
-  name: 'filter-by-domain',
+  name: 'FilterByDomain',
   props: {
     /**
      * Set of elements to be checked in the column provided
@@ -812,7 +832,7 @@ var script$4 = {
     filterBy: {
       required: true,
       type: Array,
-      "default": ''
+      default: ''
     },
 
     /**
@@ -827,7 +847,7 @@ var script$4 = {
   },
   watch: {
     filterBy: function filterBy() {
-      this.$parent.$emit('filter-by-domain-changed', this.filterBy);
+      this.$parent.$emit('FilterByDomainChanged', this.filterBy);
     }
   }
 };
@@ -868,7 +888,7 @@ var __vue_staticRenderFns__$4 = [];
 
 var components = /*#__PURE__*/Object.freeze({
   Tueble: Tueble,
-  Column: ColumnComponent,
+  TuebleColumn: TuebleColumn,
   FilterByDomain: FilterByDomain
 });
 
@@ -889,7 +909,8 @@ function install(Vue) {
   if (install.installed) return;
   install.installed = true;
   Object.keys(components).forEach(function (componentName) {
-    Vue.component(componentName, components[componentName]);
+    var compName = components[componentName].name ? components[componentName].name : componentName;
+    Vue.component(compName, components[componentName]);
   });
   Vue.filter('highlight', highlightText);
 } // Create module definition for Vue.use()
@@ -914,4 +935,4 @@ if (GlobalVue) {
 } // Default export is library as a whole, registered via Vue.use()
 
 export default plugin;
-export { ColumnComponent as Column, FilterByDomain, highlightText as HighlightText, Tueble };
+export { FilterByDomain, highlightText as HighlightText, Tueble, TuebleColumn };
