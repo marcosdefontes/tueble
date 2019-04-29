@@ -35,13 +35,8 @@
             </div>
          </div>
          <div class="column is-four-fifths">
-            <tu-table :data="[
-                      { firstName: 'John', birthday: '04/10/1940', songs: 72 },
-                      { firstName: 'Paul', birthday: '18/06/1942', songs: 70 },
-                      { firstName: 'George', birthday: '25/02/1943', songs: 22 },
-                      { firstName: 'Ringo', birthday: '07/07/1940', songs: 2 },
-                      ]" table-class="table is-fullwidth" table-body-class="tbody" default-sort-by="firstName"
-               :filter-text="searchKey" :filter-min-size="2">
+            <tu-table :data="tableData" table-class="table is-fullwidth" table-body-class="tbody"
+               default-sort-by="firstName" :filter-text="searchKey" :filter-min-size="2">
                <tueble-column :index="true" label="#"></tueble-column>
                <tueble-column label="First Name" show="firstName" :filterable="true">
                   <template slot-scope="row">

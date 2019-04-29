@@ -102,6 +102,11 @@ var BaseCell = {
          if (!query) {
             return text;
          }
+
+         if (!text)
+            return '';
+
+
          return text.toString()
             .replace(new RegExp(query, "gi"), match => {
                return '<span class="highlight">' + match + '</span>';
@@ -376,7 +381,7 @@ class FilterEngine {
                   return (
                      String(row[key])
                         .toLowerCase()
-                        .indexOf(textFilter.filterText) >= 0
+                        .indexOf(textFilter.filterText.toLowerCase()) >= 0
                   );
                });
          });

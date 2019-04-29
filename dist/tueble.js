@@ -174,6 +174,7 @@
           return text;
         }
 
+        if (!text) return '';
         return text.toString().replace(new RegExp(query, "gi"), function (match) {
           return '<span class="highlight">' + match + '</span>';
         });
@@ -447,7 +448,7 @@
             return Object.keys(row).filter(function (column) {
               return filterableColumns.includes(column);
             }).some(function (key) {
-              return String(row[key]).toLowerCase().indexOf(textFilter.filterText) >= 0;
+              return String(row[key]).toLowerCase().indexOf(textFilter.filterText.toLowerCase()) >= 0;
             });
           });
         }

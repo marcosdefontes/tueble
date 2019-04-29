@@ -39,6 +39,11 @@ export default {
          if (!query) {
             return text;
          }
+
+         if (!text)
+            return '';
+
+
          return text.toString()
             .replace(new RegExp(query, "gi"), match => {
                return '<span class="highlight">' + match + '</span>';

@@ -14,7 +14,7 @@ class FilterEngine {
                   return (
                      String(row[key])
                         .toLowerCase()
-                        .indexOf(textFilter.filterText) >= 0
+                        .indexOf(textFilter.filterText.toLowerCase()) >= 0
                   );
                });
          });
