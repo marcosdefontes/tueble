@@ -10,7 +10,8 @@
       "build": "rollup --config build/rollup.config.js",
       "watch": "rollup --config build/rollup.config.js --watch",
       "version": "npm run build && git add dist && cross-var git commit -m \"Update dist build to version $npm_package_version\" ",
-      "release": "np"
+      "release": "np",
+      "test": "jest"
    },
    "repository": {
       "type": "git",
@@ -28,12 +29,19 @@
    },
    "homepage": "https://github.com/marcosdefontes/tueble#readme",
    "devDependencies": {
-      "@babel/core": "^7.4.3",
+      "@babel/core": "^7.4.4",
       "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
       "@babel/plugin-transform-object-assign": "^7.2.0",
-      "@babel/preset-env": "^7.4.3",
+      "@babel/preset-env": "^7.4.4",
+      "@vue/test-utils": "^1.0.0-beta.29",
+      "babel-core": "7.0.0-bridge.0",
+      "babel-jest": "^24.7.1",
       "babel-preset-es2015-rollup": "^3.0.0",
       "cross-var": "^1.1.0",
+      "jest": "^24.7.1",
+      "jest-environment-jsdom-fourteen": "^0.1.0",
+      "jsdom": "^15.0.0",
+      "jsdom-global": "^3.0.2",
       "np": "^5.0.0",
       "rimraf": "^2.6.3",
       "rollup": "^1.10.1",
@@ -45,6 +53,7 @@
       "rollup-plugin-terser": "^4.0.4",
       "rollup-plugin-vue": "^5.0.0",
       "vue": "^2.5.16",
+      "vue-jest": "^3.0.4",
       "vue-template-compiler": "^2.5.16"
    }
 }
