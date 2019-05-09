@@ -33,14 +33,14 @@
 
 <script>
 // Classes
-import Column from '../classes/Column';
-import TextFilter from '../classes/TextFilter';
-import DomainFilter from '../classes/DomainFilter';
+import Column from '../../classes/Column';
+import TextFilter from '../../classes/TextFilter';
+import DomainFilter from '../../classes/DomainFilter';
 // Components
-import BaseRow from './BaseRow.vue';
-import BaseColumnHeader from './BaseColumnHeader.vue';
+import BaseRow from '../BaseRow/BaseRow.vue';
+import BaseColumnHeader from '../BaseColumnHeader/BaseColumnHeader.vue';
 // Others
-import filterEngine from '../FilterEngine';
+import filterEngine from '../../classes/FilterEngine';
 export default {
   name: 'tu-table',
   components: {

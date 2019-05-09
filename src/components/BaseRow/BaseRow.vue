@@ -11,7 +11,7 @@
   </tr>
 </template>
 <script>
-import BaseCell from './BaseCell.js';
+import BaseCell from '../BaseCell/BaseCell.js';
 export default {
   name: 'BaseRow',
   components: { BaseCell },
