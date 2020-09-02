@@ -1,5 +1,5 @@
 /*!
-* tueble v1.5.3
+* tueble v1.6.0
 * (c) 2020 Marcos Freire
 * @license MIT
 */
